@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasUuids;
+    use HasFactory, HasUuidColumn, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,5 +49,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function uniqueIds(): array
     {
         return ['uuid'];
+    }
+
+    public function projects(): BelongsToMany
+    {
+        return $this->belongsToMany(Project::class)->withTimestamps();
     }
 }

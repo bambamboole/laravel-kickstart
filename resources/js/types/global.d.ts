@@ -20,3 +20,7 @@ declare module 'vue' {
 declare module '@inertiajs/core' {
     interface PageProps extends InertiaPageProps, AppPageProps {}
 }
+
+declare module '@inertiajs/vue3' {
+    export function usePage<T>(): Page<T>; // the T generic will combine any type you add to it & the PageProps interface defined in @inertiajs/core
+}
