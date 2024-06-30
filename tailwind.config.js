@@ -15,8 +15,10 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            height: {
+                '17': '4.25rem', // 17 * 0.25rem (base unit) = 4.25rem
+            }
         },
     },
-
     plugins: [forms],
 };

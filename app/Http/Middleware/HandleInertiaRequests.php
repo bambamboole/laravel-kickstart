@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\View\SidebarRegistry;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -34,6 +35,9 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'sidebar' => app(SidebarRegistry::class)->all(),
+            'mainNavigation' => app(SidebarRegistry::class)->getMainItems(),
+            'profileNavigation' => app(SidebarRegistry::class)->getProfileItems(),
         ];
     }
 }
