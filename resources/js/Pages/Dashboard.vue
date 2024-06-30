@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
+import { useTranslation } from "i18next-vue";
+const { t } = useTranslation();
 
 const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().props.projects;
 </script>
@@ -10,7 +12,7 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">Your Projects</h2>
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">{{t('dashboard.title')}} {{t('What goes?')}}</h2>
         </template>
 
         <div class="py-12">

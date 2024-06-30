@@ -4,8 +4,66 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "940a6dea4acc6e6662fc35b0a8bd0bf9",
+    "content-hash": "2b86c374b104dbd328ac86446d6e06eb",
     "packages": [
+        {
+            "name": "bambamboole/laravel-translation-dumper",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bambamboole/laravel-translation-dumper.git",
+                "reference": "633ac5cf38a2ab97a5dd71e4c35e7a44e730699b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bambamboole/laravel-translation-dumper/zipball/633ac5cf38a2ab97a5dd71e4c35e7a44e730699b",
+                "reference": "633ac5cf38a2ab97a5dd71e4c35e7a44e730699b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^9.0|^10.0|^11.0",
+                "illuminate/translation": "^9.0|^10.0|^11.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.8",
+                "phpunit/phpunit": "^10.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bambamboole\\LaravelTranslationDumper\\LaravelTranslationDumperServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bambamboole\\LaravelTranslationDumper\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Manuel Christlieb",
+                    "email": "manuel@christlieb.eu"
+                }
+            ],
+            "description": "A laravel package to dump missing translation keys into the translation files",
+            "homepage": "https://github.com/bambamboole/laravel-translation-dumper",
+            "keywords": [
+                "bambamboole",
+                "laravel-translation-dumper"
+            ],
+            "support": {
+                "issues": "https://github.com/bambamboole/laravel-translation-dumper/issues",
+                "source": "https://github.com/bambamboole/laravel-translation-dumper/tree/0.4.0"
+            },
+            "time": "2024-03-30T13:27:32+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.12.1",
@@ -2530,6 +2588,62 @@
                 }
             ],
             "time": "2023-11-12T21:59:55+00:00"
+        },
+        {
+            "name": "processmaker/laravel-i18next",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ProcessMaker/laravel-i18next.git",
+                "reference": "f950a439a75cd69c06235213ef9b776f29a78573"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ProcessMaker/laravel-i18next/zipball/f950a439a75cd69c06235213ef9b776f29a78573",
+                "reference": "f950a439a75cd69c06235213ef9b776f29a78573",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.2"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ProcessMaker\\i18next\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "ProcessMaker\\i18next\\": "src",
+                    "ProcessMaker\\i18next\\Tests\\": "tests"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Dondich",
+                    "email": "taylor@processmaker.com"
+                },
+                {
+                    "name": "Don Gilbert",
+                    "email": "don@dongilbert.net"
+                }
+            ],
+            "description": "Transform Laravel localization files into i18next compatible format. Provides routes for i18next-xhr-backend.",
+            "support": {
+                "issues": "https://github.com/ProcessMaker/laravel-i18next/issues",
+                "source": "https://github.com/ProcessMaker/laravel-i18next/tree/develop"
+            },
+            "time": "2020-11-26T14:26:47+00:00"
         },
         {
             "name": "psr/clock",
@@ -8945,8 +9059,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "processmaker/laravel-i18next": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
