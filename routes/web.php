@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::post('/locales/add/{locale}/translation', [\App\Http\Controllers\TranslationsController::class, 'store'])->withoutMiddleware(ValidateCsrfToken::class);
+Route::post('/locales/add/{locale}/translation', [\App\Http\Controllers\TranslationsController::class, 'store']);
 Route::get('/locales/{locale}/translation.json', [\App\Http\Controllers\TranslationsController::class, 'index']);
 
 require __DIR__.'/auth.php';

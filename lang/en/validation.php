@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'accepted' => 'The :attribute field must be accepted.',
-    'accepted_if' => 'The :attribute field must be accepted when :other is :value.',
+    'accepted' => 'The :Attribute field must be accepted.',
+    'accepted_if' => 'The :ATTRIBUTE field must be accepted when :other is :value.',
     'active_url' => 'The :attribute field must be a valid URL.',
     'after' => 'The :attribute field must be a date after :date.',
     'after_or_equal' => 'The :attribute field must be a date after or equal to :date.',
@@ -189,6 +189,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email' => 'E-Mail Address',
+    ],
 
 ];

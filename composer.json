@@ -4,8 +4,13 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
+    "repositories": [{
+        "type": "path",
+        "url": "../laravel-lokalise"
+    }],
     "require": {
         "php": "^8.2",
+        "bambamboole/laravel-lokalise": "dev-main",
         "bambamboole/laravel-translation-dumper": "^0.4.0",
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.9",

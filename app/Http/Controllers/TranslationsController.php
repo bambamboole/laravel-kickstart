@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Bambamboole\LaravelTranslationDumper\ArrayExporter;
 use Bambamboole\LaravelTranslationDumper\TranslationDumper;
 use Illuminate\Http\Request;
+use Psy\Util\Str;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
@@ -65,7 +66,14 @@ class TranslationsController
             if (is_array($laravelValue)) {
                 $i18nTranslations[$i18nKey] = $this->prepare($laravelValue);
             } else {
-                $i18nTranslations[$i18nKey] = preg_replace("/:([\w\d]+)/", '{{$1}}', $laravelValue);
+                $translationWithReplacedVariableSyntax = preg_replace("/:([\w\d]+)/", '{{$1}}', $laravelValue);
+                if (\Illuminate\Support\Str::contains($translationWithReplacedVariableSyntax, '|')){
+                    [$one, $other] = explode('|', $translationWithReplacedVariableSyntax);
+                    $i18nTranslations[$i18nKey . '_one'] = $one;
+                    $i18nTranslations[$i18nKey . '_other'] = $other;
+                } else {
+                    $i18nTranslations[$i18nKey] = $translationWithReplacedVariableSyntax;
+                }
             }
         }
 

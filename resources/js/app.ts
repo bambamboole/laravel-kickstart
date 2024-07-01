@@ -7,13 +7,19 @@ import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
 import {ZiggyVue} from '../../vendor/tightenco/ziggy';
 import i18next from 'i18next';
 import I18NextVue from 'i18next-vue';
-import HttpBackend, { HttpBackendOptions } from 'i18next-http-backend'
+import HttpBackend, {HttpBackendOptions} from 'i18next-http-backend'
 
 i18next.use(HttpBackend).init<HttpBackendOptions>({
     saveMissing: true,
     backend: {
-      withCredentials: true,
+        withCredentials: true,
+        customHeaders: () => {
+            const csrf = document.querySelector<HTMLElement>('meta[name="csrf-token"]')
+
+            return csrf === null ? {} : {'X-CSRF-TOKEN': csrf.getAttribute('content')}
+        },
     },
+
     lng: 'en',
     interpolation: {
         escapeValue: false
