@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,8 +26,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::post('/locales/add/{locale}/translation', [\App\Http\Controllers\TranslationsController::class, 'store']);
-Route::get('/locales/{locale}/translation.json', [\App\Http\Controllers\TranslationsController::class, 'index']);
 
 require __DIR__.'/auth.php';

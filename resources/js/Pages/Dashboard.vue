@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
-import { useTranslation } from "i18next-vue";
+import { useTranslation } from 'i18next-vue';
 const { t } = useTranslation();
 
 const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().props.projects;
@@ -12,12 +12,12 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">{{t('dashboard.title')}} {{t('What goes?')}}</h2>
+            <h2 class="text-xl leading-tight text-gray-800" v-html="t('dashboard.title')"></h2>
         </template>
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <p>{{ t('projects.projectCount', {count: 4, test: 'foo'}) }}</p>
+                <p>{{ t('projects.projectCount', { count: 4, test: 'foo' }) }}</p>
                 <ul role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
                     <li
                         v-for="project in projects"
@@ -26,7 +26,7 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
                     >
                         <div class="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
                             <Link href="#" class="text-sm font-medium leading-6 text-gray-900"
-                                >{{ project.name }}
+                                >{{ project.name }} - {{ t('test.foo') }}
                             </Link>
                         </div>
                     </li>

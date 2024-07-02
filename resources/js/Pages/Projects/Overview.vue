@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import ProjectLayout from '@/Layouts/ProjectLayout.vue';
-import { usePage } from '@inertiajs/inertia-vue3';
 </script>
 
 <template>
