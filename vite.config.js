@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
-import path from 'path'
-
+import { coverageConfigDefaults } from 'vitest/config';
 export default defineConfig({
     plugins: [
         laravel({
@@ -18,9 +17,13 @@ export default defineConfig({
             },
         }),
     ],
-    resolve: {
-        alias: {
-            'ziggy-js': path.resolve('vendor/tightenco/ziggy/dist'),
+    test: {
+        globals: true,
+        environment: 'jsdom',
+        setupFiles: ['./resources/js/setupTests.ts'],
+        coverage: {
+            include: ['resources/js/**/*'],
+            exclude: [...coverageConfigDefaults.exclude, 'resources/js/bootstrap.ts', 'resources/js/setupTests.ts'],
         },
     },
 });

@@ -13,9 +13,7 @@ import {
 } from '@headlessui/vue';
 import * as Icons from '@heroicons/vue/24/outline';
 import { Bars3Icon, XMarkIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
-const iconComponents = Object.fromEntries(
-    Object.entries(Icons).map(([key, value]) => [key, value])
-);
+const iconComponents = Object.fromEntries(Object.entries(Icons).map(([key, value]) => [key, value]));
 const sidebarOpen = ref(false);
 </script>
 

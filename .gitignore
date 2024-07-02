@@ -18,3 +18,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/coverage
+/resources/js/ziggy.d.ts
+/resources/js/ziggy.js
