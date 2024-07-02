@@ -13,7 +13,9 @@ import {
 } from '@headlessui/vue';
 import * as Icons from '@heroicons/vue/24/outline';
 import { Bars3Icon, XMarkIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
-
+const iconComponents = Object.fromEntries(
+    Object.entries(Icons).map(([key, value]) => [key, value])
+);
 const sidebarOpen = ref(false);
 </script>
 
@@ -84,7 +86,7 @@ const sidebarOpen = ref(false);
                                                         ]"
                                                     >
                                                         <component
-                                                            :is="Icons[item.icon]"
+                                                            :is="iconComponents[item.icon]"
                                                             :class="[
                                                                 route().current(item.route)
                                                                     ? 'foobar text-indigo-600'
@@ -133,7 +135,7 @@ const sidebarOpen = ref(false);
                                         ]"
                                     >
                                         <component
-                                            :is="Icons[item.icon]"
+                                            :is="iconComponents[item.icon]"
                                             :class="[
                                                 route().current(item.route)
                                                     ? 'text-indigo-600'
