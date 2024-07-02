@@ -8,6 +8,9 @@ import { ZiggyVue } from 'ziggy-js';
 import i18next from 'i18next';
 import I18NextVue from 'i18next-vue';
 import HttpBackend, { HttpBackendOptions } from 'i18next-http-backend';
+import Toast, { PluginOptions } from 'vue-toastification';
+// Import the CSS or use your own!
+import 'vue-toastification/dist/index.css';
 
 i18next.use(HttpBackend).init<HttpBackendOptions>({
     saveMissing: import.meta.env.VITE_ENV === 'local',
@@ -26,6 +29,7 @@ i18next.use(HttpBackend).init<HttpBackendOptions>({
     fallbackLng: false,
 });
 
+const toastOptions: PluginOptions = {};
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
@@ -37,6 +41,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(I18NextVue, { i18next })
+            .use(Toast, toastOptions)
             .mount(el);
     },
     progress: {

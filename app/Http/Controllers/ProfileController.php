@@ -37,7 +37,7 @@ class ProfileController
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        return Redirect::route('profile.edit')->with('success', 'Profile updated successfully');
     }
 
     /**

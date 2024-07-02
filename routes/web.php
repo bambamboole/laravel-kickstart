@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function (Request $request) {
+
     return Inertia::render('Dashboard', [
         'projects' => $request->user()->projects()->get(),
     ]);

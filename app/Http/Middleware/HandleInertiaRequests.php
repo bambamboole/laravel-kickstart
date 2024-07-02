@@ -35,6 +35,10 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'flash' => fn () => collect(['success', 'error', 'warning', 'info'])
+                ->mapWithKeys(fn ($key) => [$key => $request->session()->pull($key)])
+                ->filter()
+                ->all(),
             'sidebar' => app(SidebarRegistry::class)->all(),
             'mainNavigation' => app(SidebarRegistry::class)->getMainItems(),
             'profileNavigation' => app(SidebarRegistry::class)->getProfileItems(),
