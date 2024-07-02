@@ -13,6 +13,7 @@
     "bambamboole/laravel-lokalise": "^0.2.0",
     "inertiajs/inertia-laravel": "^1.0",
     "laravel/framework": "^11.9",
+    "laravel/reverb": "@beta",
     "laravel/sanctum": "^4.0",
     "laravel/tinker": "^2.9",
     "processmaker/laravel-i18next": "dev-master",

@@ -3,6 +3,11 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { useTranslation } from 'i18next-vue';
 const { t } = useTranslation();
+import { useToast, TYPE } from 'vue-toastification';
+const toast = useToast();
+window.Echo.channel(`orders.1`).listen('OrderShipmentStatusUpdated', (e) => {
+    toast(`Order ${e.order.id} has been shipped!`);
+});
 
 const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().props.projects;
 </script>
