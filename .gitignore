@@ -18,6 +18,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/coverage
+/vitest-coverage
 /resources/js/ziggy.d.ts
 /resources/js/ziggy.js

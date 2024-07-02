@@ -22,6 +22,7 @@ export default defineConfig({
         environment: 'jsdom',
         setupFiles: ['./resources/js/setupTests.ts'],
         coverage: {
+            reportsDirectory: 'vitest-coverage',
             include: ['resources/js/**/*'],
             exclude: [...coverageConfigDefaults.exclude, 'resources/js/bootstrap.ts', 'resources/js/setupTests.ts'],
         },
