@@ -13,12 +13,14 @@ import {
 } from '@headlessui/vue';
 import * as Icons from '@heroicons/vue/24/outline';
 import { Bars3Icon, XMarkIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
+import Toast from '@/Components/Toast.vue';
 const iconComponents = Object.fromEntries(Object.entries(Icons).map(([key, value]) => [key, value]));
 const sidebarOpen = ref(false);
 </script>
 
 <template>
     <div>
+        <Toast />
         <TransitionRoot as="template" :show="sidebarOpen">
             <Dialog class="relative z-50 lg:hidden" @close="sidebarOpen = false">
                 <TransitionChild

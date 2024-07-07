@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Projects\CreateProjectController;
+use App\Http\Controllers\Projects\DeleteProjectController;
 use App\Http\Controllers\Projects\ProjectOverviewController;
 use App\Http\Controllers\Projects\ProjectSettingsController;
 use Illuminate\Foundation\Application;
@@ -32,9 +33,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::post('/projects', CreateProjectController::class)->name('projects.create');
-    Route::get('/projects/{uuid}', ProjectOverviewController::class)->name('projects.overview');
-    Route::get('/projects/{uuid}/settings', ProjectSettingsController::class)->name('projects.settings');
+    Route::post('/projects', CreateProjectController::class)->name('project.create');
+    Route::get('/projects/{uuid}', ProjectOverviewController::class)->name('project.overview');
+    Route::delete('/projects/{uuid}', DeleteProjectController::class)->name('project.delete');
+    Route::get('/projects/{uuid}/settings', ProjectSettingsController::class)->name('project.settings');
 });
 
 require __DIR__.'/auth.php';

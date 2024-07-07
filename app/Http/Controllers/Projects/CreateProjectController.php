@@ -11,6 +11,6 @@ class CreateProjectController
     {
         $project = $request->user()->projects()->create($request->validated());
 
-        return Redirect::route('projects.overview', ['uuid' => $project->uuid])->with('success', 'Project created successfully');
+        return Redirect::route('project.overview', ['uuid' => $project->uuid])->with('success', 'Project created successfully');
     }
 }
