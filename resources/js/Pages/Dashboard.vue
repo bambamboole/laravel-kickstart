@@ -1,13 +1,44 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link, usePage } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { useTranslation } from 'i18next-vue';
+
 const { t } = useTranslation();
-import { useToast, TYPE } from 'vue-toastification';
+import { useToast } from 'vue-toastification';
+import { ref } from 'vue';
+import Modal from '@/Components/Modal.vue';
+import TextInput from '@/Components/TextInput.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import InputError from '@/Components/InputError.vue';
+import DangerButton from '@/Components/DangerButton.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+
 const toast = useToast();
 window.Echo.channel(`orders.1`).listen('OrderShipmentStatusUpdated', (e) => {
     toast(`Order ${e.order.id} has been shipped!`);
 });
+const projectForm = useForm({
+    name: '',
+});
+const creatingNewProject = ref(false);
+const openCreateNewProjectModal = () => {
+    creatingNewProject.value = true;
+};
+const closeCreateProjectModal = () => {
+    creatingNewProject.value = false;
+    projectForm.reset();
+};
+const createProject = () => {
+    projectForm.post(route('projects.create'), {
+        preserveScroll: true,
+        onSuccess: () => closeCreateProjectModal(),
+        // onError: () => passwordInput.value?.focus(),
+        onFinish: () => {
+            projectForm.reset();
+        },
+    });
+};
 
 const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().props.projects;
 </script>
@@ -31,18 +62,62 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
                     >
                         <div class="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
                             <Link href="#" class="text-sm font-medium leading-6 text-gray-900"
-                                >{{ project.name }} - {{ t('test.foo') }}
+                                >{{ project.name }}
                             </Link>
                         </div>
                     </li>
                     <li class="overflow-hidden rounded-xl border border-gray-200">
                         <div class="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-                            <Link href="#" class="text-sm font-medium leading-6 text-gray-900"
-                                >Create new Project
-                            </Link>
+                            <button
+                                type="button"
+                                @click="openCreateNewProjectModal"
+                                class="text-sm font-medium leading-6 text-gray-900"
+                            >
+                                Create new Project
+                            </button>
                         </div>
                     </li>
                 </ul>
+                <Modal :show="creatingNewProject" @close="closeCreateProjectModal">
+                    <div class="p-6">
+                        <h2 class="text-lg font-medium text-gray-900">{{ t('dashboard.createProjectModal.title') }}</h2>
+
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ t('dashboard.createProjectModal.description') }}
+                        </p>
+
+                        <div class="mt-6">
+                            <InputLabel
+                                for="name"
+                                :value="t('dashboard.createProjectModal.form.name.label')"
+                                class="sr-only"
+                            />
+
+                            <TextInput
+                                id="name"
+                                v-model="projectForm.name"
+                                type="text"
+                                class="mt-1 block w-3/4"
+                                :placeholder="t('dashboard.createProjectModal.form.name.placeholder')"
+                            />
+
+                            <InputError :message="projectForm.errors.name" class="mt-2" />
+                        </div>
+
+                        <div class="mt-6 flex justify-end">
+                            <SecondaryButton @click="closeCreateProjectModal">
+                                {{ t('dashboard.createProjectModal.cancel') }}
+                            </SecondaryButton>
+                            <PrimaryButton
+                                class="ms-3"
+                                :class="{ 'opacity-25': projectForm.processing }"
+                                :disabled="projectForm.processing"
+                                @click="createProject"
+                                >Create
+                            </PrimaryButton>
+                        </div>
+                    </div>
+                </Modal>
             </div>
         </div>
     </AuthenticatedLayout>

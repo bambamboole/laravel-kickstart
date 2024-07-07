@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Projects\CreateProjectController;
+use App\Http\Controllers\Projects\ProjectOverviewController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +28,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::post('/projects', CreateProjectController::class)->name('projects.create');
+    Route::get('/projects/{uuid}', ProjectOverviewController::class)->name('projects.overview');
 });
 
 require __DIR__.'/auth.php';

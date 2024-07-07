@@ -4,7 +4,7 @@ import ProjectLayout from '@/Layouts/ProjectLayout.vue';
 </script>
 
 <template>
-    <Head title="Profile" />
+    <Head title="Project Overview" />
 
     <ProjectLayout>
         <template #header>
