@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Projects\CreateProjectController;
 use App\Http\Controllers\Projects\ProjectOverviewController;
+use App\Http\Controllers\Projects\ProjectSettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/projects', CreateProjectController::class)->name('projects.create');
     Route::get('/projects/{uuid}', ProjectOverviewController::class)->name('projects.overview');
+    Route::get('/projects/{uuid}/settings', ProjectSettingsController::class)->name('projects.settings');
 });
 
 require __DIR__.'/auth.php';

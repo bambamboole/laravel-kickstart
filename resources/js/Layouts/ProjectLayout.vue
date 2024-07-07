@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { Link } from '@inertiajs/vue3';
 import {
@@ -75,7 +75,7 @@ const sidebarOpen = ref(false);
                                             <ul role="list" class="-mx-2 space-y-1">
                                                 <li v-for="item in $page.props.sidebar.main" :key="item.name">
                                                     <Link
-                                                        :href="route(item.route)"
+                                                        :href="route(item.route, item.params)"
                                                         :class="[
                                                             route().current(item.route)
                                                                 ? 'bg-gray-50 text-indigo-600'
@@ -124,7 +124,7 @@ const sidebarOpen = ref(false);
                             <ul role="list" class="-mx-2 space-y-1">
                                 <li v-for="item in $page.props.sidebar.main" :key="item.name">
                                     <Link
-                                        :href="route(item.route)"
+                                        :href="route(item.route, item.params)"
                                         :class="[
                                             route().current(item.route)
                                                 ? 'bg-gray-50 text-indigo-600'

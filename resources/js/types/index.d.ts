@@ -12,8 +12,9 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     sidebar: {
         main: Array<{
             name: string;
-            route: string;
             icon: string;
+            route: string;
+            params?: Record<keyof any, unknown>;
         }>;
         profile: Array<{
             name: string;
