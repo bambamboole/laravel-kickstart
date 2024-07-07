@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\View\SidebarRegistry;
+use App\Services\View\SidebarRegistry;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 

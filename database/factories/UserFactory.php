@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Project;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -45,6 +46,9 @@ class UserFactory extends Factory
 
     public function withProject(array $state = []): static
     {
-        return $this->has(Project::factory($state));
+        return $this->hasAttached(
+            Project::factory($state),
+            ['role_id' => Role::query()->firstOrCreate(['name' => 'owner'])->id]
+        );
     }
 }

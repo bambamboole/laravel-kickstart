@@ -1,10 +1,8 @@
 <?php declare(strict_types=1);
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Projects\CreateProjectController;
-use App\Http\Controllers\Projects\DeleteProjectController;
-use App\Http\Controllers\Projects\ProjectOverviewController;
-use App\Http\Controllers\Projects\ProjectSettingsController;
+use App\Http\Controllers\Projects\ProjectController;
+use App\Http\Controllers\Projects\ProjectMembersController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,10 +31,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::post('/projects', CreateProjectController::class)->name('project.create');
-    Route::get('/projects/{uuid}', ProjectOverviewController::class)->name('project.overview');
-    Route::delete('/projects/{uuid}', DeleteProjectController::class)->name('project.delete');
-    Route::get('/projects/{uuid}/settings', ProjectSettingsController::class)->name('project.settings');
+    Route::post('/projects', [ProjectController::class, 'create'])->name('project.create');
+    Route::get('/projects/{uuid}', [ProjectController::class, 'show'])->name('project.overview');
+    Route::delete('/projects/{uuid}', [ProjectController::class, 'delete'])->name('project.delete');
+    Route::get('/projects/{uuid}/settings', [ProjectController::class, 'settings'])->name('project.settings');
+    Route::get('/projects/{uuid}/members', [ProjectMembersController::class, 'index'])->name('project.members.index');
 });
 
 require __DIR__.'/auth.php';

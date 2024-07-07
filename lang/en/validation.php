@@ -163,6 +163,8 @@ return [
         'name' => [
             'dddd' => 'x-validation.values.name.dddd',
             'ddddd' => 'x-validation.values.name.ddddd',
+            'test-foo' => 'x-validation.values.name.test-foo',
+            'test-project' => 'x-validation.values.name.test-project',
             'test3' => 'x-validation.values.name.test3',
         ],
     ],

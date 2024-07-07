@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View;
+namespace App\Services\View;
 
 class SidebarRegistry
 {
