@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -10,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, HasUuidColumn, Notifiable;
+    use EagerLoadPivotTrait, HasFactory, HasUuidColumn, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -53,6 +54,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function projects(): BelongsToMany
     {
-        return $this->belongsToMany(Project::class)->withTimestamps();
+        return $this->belongsToMany(Project::class)
+            ->using(ProjectMember::class)
+            ->withPivot('role_id')
+            ->withTimestamps();
     }
 }
