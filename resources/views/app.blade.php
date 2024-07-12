@@ -20,5 +20,11 @@
     </head>
     <body class="h-full bg-white font-sans antialiased">
         @inertia
+        {{-- This snippet removes the annoying margin-bottom on the body tag if the debug bar is enabled --}}
+        @if (config('app.debug'))
+            <script>
+                PhpDebugBar.DebugBar.prototype.recomputeBottomOffset = () => {};
+            </script>
+        @endif
     </body>
 </html>

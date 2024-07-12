@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Projects;
 
 use App\Http\Requests\Projects\CreateProjectRequest;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -11,7 +12,8 @@ class ProjectController
 {
     public function create(CreateProjectRequest $request)
     {
-        $project = $request->user()->projects()->create($request->validated());
+        $role = Role::query()->where('name', 'owner')->firstOrFail();
+        $project = $request->user()->projects()->create($request->validated(), ['role_id' => $role->id]);
 
         return Redirect::route('project.overview', ['uuid' => $project->uuid])->with('success', 'Project created successfully');
     }

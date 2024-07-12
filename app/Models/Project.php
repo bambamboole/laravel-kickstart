@@ -9,8 +9,8 @@ class Project extends Model
 {
     use HasFactory, HasUuidColumn;
 
-    public function users(): BelongsToMany
+    public function members(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(User::class, relatedPivotKey: 'user_id')->withTimestamps();
     }
 }
