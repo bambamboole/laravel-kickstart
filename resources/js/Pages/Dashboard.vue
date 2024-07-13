@@ -33,7 +33,6 @@ const createProject = () => {
     projectForm.post(route('project.create'), {
         preserveScroll: true,
         onSuccess: () => closeCreateProjectModal(),
-        // onError: () => passwordInput.value?.focus(),
         onFinish: () => {
             projectForm.reset();
         },

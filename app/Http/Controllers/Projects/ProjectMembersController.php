@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Projects;
 
 use App\Http\Resource\ProjectResource;
+use App\Http\Resource\RoleResource;
+use App\Models\Role;
 use Inertia\Inertia;
 
 class ProjectMembersController
@@ -10,7 +12,8 @@ class ProjectMembersController
     public function index(string $id)
     {
         $project = auth()->user()->projects()->where('uuid', $id)->with('members.pivot.role')->firstOrFail();
-
+        $roles = RoleResource::collection(Role::query()->get());
+        $roles::withoutWrapping();
         $resource = new ProjectResource($project);
         $resource::withoutWrapping();
 
@@ -18,6 +21,7 @@ class ProjectMembersController
             'Projects/Members/Index',
             [
                 'project' => $resource,
+                'roles' => $roles,
             ]
         );
     }

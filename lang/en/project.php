@@ -17,6 +17,26 @@ return [
     'members' => [
         'index' => [
             'description' => 'i18next-project.members.index.description',
+            'header' => 'i18next-project.members.index.header',
+            'invite' => [
+                'button' => 'i18next-project.members.index.invite.button',
+            ],
+            'inviteModal' => [
+                'button' => 'i18next-project.members.index.inviteModal.button',
+                'cancel' => 'i18next-project.members.index.inviteModal.cancel',
+                'description' => 'i18next-project.members.index.inviteModal.description',
+                'form' => [
+                    'email' => [
+                        'label' => 'i18next-project.members.index.inviteModal.form.email.label',
+                        'placeholder' => 'i18next-project.members.index.inviteModal.form.email.placeholder',
+                    ],
+                    'role' => [
+                        'label' => 'i18next-project.members.index.inviteModal.form.role.label',
+                    ],
+                ],
+                'title' => 'i18next-project.members.index.inviteModal.title',
+            ],
+            'title' => 'i18next-project.members.index.title',
         ],
     ],
 ];

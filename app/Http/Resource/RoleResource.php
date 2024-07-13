@@ -15,6 +15,7 @@ class RoleResource extends JsonResource
         return [
             'uuid' => $this->resource->uuid,
             'name' => $this->resource->name,
+            'permissions' => $this->resource->permissions,
         ];
     }
 }
