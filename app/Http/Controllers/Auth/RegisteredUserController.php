@@ -72,7 +72,6 @@ class RegisteredUserController
         event(new Registered($user));
 
         $invitation = ProjectInvitation::query()->where('uuid', $invitationUuid)->firstOrFail();
-        dump($invitation, $invitation->project);
         $invitation->project->members()->attach($user->id, ['role_id' => $invitation->role_id]);
         $invitation->delete();
 
