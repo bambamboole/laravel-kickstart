@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Projects;
 
+use App\Http\Resource\ProjectResource;
 use Inertia\Inertia;
 
 class ProjectMembersController
@@ -10,10 +11,13 @@ class ProjectMembersController
     {
         $project = auth()->user()->projects()->where('uuid', $id)->with('members.pivot.role')->firstOrFail();
 
+        $resource = new ProjectResource($project);
+        $resource::withoutWrapping();
+
         return Inertia::render(
             'Projects/Members/Index',
             [
-                'project' => $project,
+                'project' => $resource,
             ]
         );
     }

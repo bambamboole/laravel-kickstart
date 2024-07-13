@@ -11,6 +11,6 @@ import ProjectLayout from '@/Layouts/ProjectLayout.vue';
             <h2 class="text-xl font-semibold leading-tight text-gray-800">Overview</h2>
         </template>
 
-        <div class="py-12">wefewf</div>
+        <div class="py-12">{{ $page.props.project.name }}</div>
     </ProjectLayout>
 </template>

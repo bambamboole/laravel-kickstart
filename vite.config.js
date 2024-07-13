@@ -3,6 +3,11 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import { coverageConfigDefaults } from 'vitest/config';
 export default defineConfig({
+    server: {
+        watch: {
+            ignored: ['**/lang/**/*'],
+        },
+    },
     plugins: [
         laravel({
             input: 'resources/js/app.ts',

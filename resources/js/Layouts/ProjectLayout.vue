@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-
 import { Link } from '@inertiajs/vue3';
 import {
     Dialog,
@@ -14,6 +13,8 @@ import {
 import * as Icons from '@heroicons/vue/24/outline';
 import { Bars3Icon, XMarkIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 import Toast from '@/Components/Toast.vue';
+import { useTranslation } from 'i18next-vue';
+const { t } = useTranslation();
 const iconComponents = Object.fromEntries(Object.entries(Icons).map(([key, value]) => [key, value]));
 const sidebarOpen = ref(false);
 </script>
@@ -152,13 +153,17 @@ const sidebarOpen = ref(false);
                         <li class="-mx-6 mt-auto">
                             <Disclosure as="div" v-slot="{ open }">
                                 <DisclosurePanel as="ul" class="mt-1 px-2">
+                                    <li>
+                                        <Link
+                                            :href="route('dashboard')"
+                                            class="block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
+                                            >{{ t('sidebar.back_to_dashboard') }}</Link
+                                        >
+                                    </li>
                                     <li v-for="subItem in $page.props.sidebar.profile" :key="subItem.name">
                                         <Link
                                             :href="route(subItem.route)"
-                                            :class="[
-                                                route().current(subItem.route) ? 'bg-gray-50' : 'hover:bg-gray-50',
-                                                'block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700',
-                                            ]"
+                                            class="block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
                                             >{{ subItem.name }}</Link
                                         >
                                     </li>

@@ -14,4 +14,9 @@ return [
         'success' => 'Project :name was successfully deleted',
         'title' => 'Delete project',
     ],
+    'members' => [
+        'index' => [
+            'description' => 'i18next-project.members.index.description',
+        ],
+    ],
 ];
