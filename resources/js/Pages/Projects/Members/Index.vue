@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, router, useForm, usePage } from '@inertiajs/vue3';
 import ProjectLayout from '@/Layouts/ProjectLayout.vue';
 import { useTranslation } from 'i18next-vue';
 import { ref } from 'vue';
@@ -17,7 +17,7 @@ const props = usePage<{
 }>().props;
 const inviteMemberForm = useForm({
     email: '',
-    role: '',
+    role_uuid: '',
 });
 const invitingMember = ref(false);
 const openInviteMemberModal = () => {
@@ -28,12 +28,9 @@ const closeInviteMemberModal = () => {
     inviteMemberForm.reset();
 };
 const inviteMember = () => {
-    inviteMemberForm.post('/foo/wqdqdqwdqd', {
+    inviteMemberForm.post(route('project.members.invite', props.project.uuid), {
         preserveScroll: true,
         onSuccess: () => closeInviteMemberModal(),
-        onFinish: () => {
-            inviteMemberForm.reset();
-        },
     });
 };
 </script>
@@ -79,8 +76,8 @@ const inviteMember = () => {
                 <div class="mt-6">
                     <InputLabel
                         for="role"
+                        class="pb-6"
                         :value="t('project.members.index.inviteModal.form.role.label')"
-                        class="sr-only"
                     />
 
                     <fieldset aria-label="Role">
@@ -93,7 +90,7 @@ const inviteMember = () => {
                                         name="role"
                                         type="radio"
                                         :value="role.uuid"
-                                        v-model="inviteMemberForm.role"
+                                        v-model="inviteMemberForm.role_uuid"
                                         class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                                     />
                                 </div>
@@ -106,7 +103,7 @@ const inviteMember = () => {
                             </div>
                         </div>
                     </fieldset>
-                    <InputError :message="inviteMemberForm.errors.role" class="mt-2" />
+                    <InputError :message="inviteMemberForm.errors.role_uuid" class="mt-2" />
                 </div>
 
                 <div class="mt-6 flex justify-end">
@@ -123,6 +120,7 @@ const inviteMember = () => {
                 </div>
             </div>
         </Modal>
+        <div class="py-6">{{ t('project.members.index.member_list') }}</div>
         <ul role="list" class="divide-y divide-gray-100">
             <li v-for="member in props.project.members" :key="member.email" class="flex gap-x-4 py-5">
                 <div class="min-w-0">
@@ -130,6 +128,16 @@ const inviteMember = () => {
                         {{ member.name }} ({{ member.role.name }})
                     </p>
                     <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ member.email }}</p>
+                </div>
+            </li>
+        </ul>
+        <div class="py-6">{{ t('project.members.index.invitation_list') }}</div>
+        <ul role="list" class="divide-y divide-gray-100">
+            <li v-for="invitation in props.project.invitations" :key="invitation.email" class="flex gap-x-4 py-5">
+                <div class="min-w-0">
+                    <p class="text-sm font-semibold leading-6 text-gray-900">
+                        {{ invitation.email }}
+                    </p>
                 </div>
             </li>
         </ul>

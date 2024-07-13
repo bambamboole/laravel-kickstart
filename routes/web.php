@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/projects/{uuid}', [ProjectController::class, 'delete'])->name('project.delete');
     Route::get('/projects/{uuid}/settings', [ProjectController::class, 'settings'])->name('project.settings');
     Route::get('/projects/{uuid}/members', [ProjectMembersController::class, 'index'])->name('project.members.index');
+    Route::post('/projects/{uuid}/members', [ProjectMembersController::class, 'invite'])->name('project.members.invite');
 });
+Route::get('/project-invitations/{uuid}', [ProjectMembersController::class, 'accept'])->middleware(['signed'])->name('project-invitation.accept');
 
 require __DIR__.'/auth.php';

@@ -16,27 +16,29 @@ return [
     ],
     'members' => [
         'index' => [
-            'description' => 'i18next-project.members.index.description',
-            'header' => 'i18next-project.members.index.header',
+            'description' => 'Here you can manage the project members',
+            'header' => 'Project members',
+            'invitation_list' => 'i18next-project.members.index.invitation_list',
             'invite' => [
-                'button' => 'i18next-project.members.index.invite.button',
+                'button' => 'Invite a new Member',
             ],
             'inviteModal' => [
-                'button' => 'i18next-project.members.index.inviteModal.button',
-                'cancel' => 'i18next-project.members.index.inviteModal.cancel',
-                'description' => 'i18next-project.members.index.inviteModal.description',
+                'button' => 'Invite a new Member',
+                'cancel' => 'cancel',
+                'description' => 'The invitee will get an email with alink to join the project. Please make sure the email is correct.',
                 'form' => [
                     'email' => [
-                        'label' => 'i18next-project.members.index.inviteModal.form.email.label',
-                        'placeholder' => 'i18next-project.members.index.inviteModal.form.email.placeholder',
+                        'label' => 'Email',
+                        'placeholder' => 'the invitees email address...',
                     ],
                     'role' => [
-                        'label' => 'i18next-project.members.index.inviteModal.form.role.label',
+                        'label' => 'Role',
                     ],
                 ],
-                'title' => 'i18next-project.members.index.inviteModal.title',
+                'title' => 'Invite a new member',
             ],
-            'title' => 'i18next-project.members.index.title',
+            'member_list' => 'i18next-project.members.index.member_list',
+            'title' => 'Invite a new member',
         ],
     ],
 ];

@@ -13,6 +13,7 @@ return [
     'ascii' => 'The :attribute field must only contain single-byte alphanumeric characters and symbols.',
     'attributes' => [
         'email' => 'E-Mail Address',
+        'role_uuid' => 'Role',
     ],
     'before' => 'The :attribute field must be a date before :date.',
     'before_or_equal' => 'The :attribute field must be a date before or equal to :date.',
@@ -31,8 +32,15 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'email' => [
+            'email' => 'The email must be a valid email address.',
+            'required' => 'The email is required',
+        ],
         'name' => [
             'in' => 'The name does not match the projects name',
+        ],
+        'role_uuid' => [
+            'required' => 'The role is required',
         ],
     ],
     'date' => 'The :attribute field must be a valid date.',
@@ -72,6 +80,9 @@ return [
     'in' => 'The selected :attribute is invalid.',
     'in_array' => 'The :attribute field must exist in :other.',
     'integer' => 'The :attribute field must be an integer.',
+    'invitation' => [
+        'exists' => 'x-validation.invitation.exists',
+    ],
     'ip' => 'The :attribute field must be a valid IP address.',
     'ipv4' => 'The :attribute field must be a valid IPv4 address.',
     'ipv6' => 'The :attribute field must be a valid IPv6 address.',
@@ -160,6 +171,9 @@ return [
     'url' => 'The :attribute field must be a valid URL.',
     'uuid' => 'The :attribute field must be a valid UUID.',
     'values' => [
+        'email' => [
+            'fwefw' => 'x-validation.values.email.fwefw',
+        ],
         'name' => [
             'dddd' => 'x-validation.values.name.dddd',
             'ddddd' => 'x-validation.values.name.ddddd',

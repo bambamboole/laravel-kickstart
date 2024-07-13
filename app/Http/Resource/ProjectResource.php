@@ -16,6 +16,7 @@ class ProjectResource extends JsonResource
             'uuid' => $this->resource->uuid,
             'name' => $this->resource->name,
             'members' => MemberResource::collection($this->whenLoaded('members')),
+            'invitations' => InvitationResource::collection($this->whenLoaded('invitations')),
         ];
     }
 }
