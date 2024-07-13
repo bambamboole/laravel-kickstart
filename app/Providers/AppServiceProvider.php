@@ -24,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(SidebarRegistry $sidebarRegistry, PermissionRegistry $permissionRegistry): void
     {
         $permissionRegistry->add('project.delete');
+        $permissionRegistry->add('project.members.invite');
+        $permissionRegistry->add('project.members.remove');
+        $permissionRegistry->add('project-invitation.remove');
+        $permissionRegistry->add('project.api-token.create');
+        $permissionRegistry->add('project.api-token.delete');
         $sidebarRegistry->addMainItem('Overview', 'HomeIcon', 'project.overview', fn (Request $request) => ['uuid' => $request->route('uuid')]);
         $sidebarRegistry->addMainItem('Settings', 'CogIcon', 'project.settings', fn (Request $request) => ['uuid' => $request->route('uuid')]);
         $sidebarRegistry->addMainItem('Members', 'UsersIcon', 'project.members.index', fn (Request $request) => ['uuid' => $request->route('uuid')]);

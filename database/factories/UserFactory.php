@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Project;
 use App\Models\Role;
+use App\Services\Auth\PermissionRegistry;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -48,7 +49,7 @@ class UserFactory extends Factory
     {
         return $this->hasAttached(
             Project::factory($state),
-            ['role_id' => Role::query()->firstOrCreate(['name' => 'owner'])->id]
+            ['role_id' => Role::query()->firstOrCreate(['name' => 'owner'], ['permissions' => app(PermissionRegistry::class)->all()])->id]
         );
     }
 }

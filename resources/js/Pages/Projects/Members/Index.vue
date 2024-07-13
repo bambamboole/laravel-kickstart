@@ -9,6 +9,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { hasProjectPermission } from '@/utils';
 
 const { t } = useTranslation();
 const props = usePage<{
@@ -19,6 +20,7 @@ const inviteMemberForm = useForm({
     email: '',
     role_uuid: '',
 });
+
 const invitingMember = ref(false);
 const openInviteMemberModal = () => {
     invitingMember.value = true;
@@ -44,7 +46,12 @@ const inviteMember = () => {
         </template>
 
         <div class="py-12">{{ t('project.members.index.description') }}</div>
-        <button type="button" @click="openInviteMemberModal" class="text-sm font-medium leading-6 text-gray-900">
+        <button
+            v-if="hasProjectPermission('project.members.invite')"
+            type="button"
+            @click="openInviteMemberModal"
+            class="text-sm font-medium leading-6 text-gray-900"
+        >
             {{ t('project.members.index.inviteModal.button') }}
         </button>
         <Modal :show="invitingMember" @close="closeInviteMemberModal" max-width="lg">

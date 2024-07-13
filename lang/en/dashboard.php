@@ -12,7 +12,6 @@ return [
             ],
         ],
         'title' => 'Create a new project',
-        'wdbqhkdqk' => 'i18next-dashboard.createProjectModal.wdbqhkdqk',
     ],
     'title' => '<div class="p-8 text-red-500">The <strong>best</strong> Dashboard of the <i>World</i></div>',
 ];

@@ -18,7 +18,7 @@ return [
         'index' => [
             'description' => 'Here you can manage the project members',
             'header' => 'Project members',
-            'invitation_list' => 'i18next-project.members.index.invitation_list',
+            'invitation_list' => 'Open invitations',
             'invite' => [
                 'button' => 'Invite a new Member',
             ],
@@ -37,7 +37,7 @@ return [
                 ],
                 'title' => 'Invite a new member',
             ],
-            'member_list' => 'i18next-project.members.index.member_list',
+            'member_list' => 'Members',
             'title' => 'Invite a new member',
         ],
     ],
