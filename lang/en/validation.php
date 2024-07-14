@@ -172,6 +172,7 @@ return [
     'uuid' => 'The :attribute field must be a valid UUID.',
     'values' => [
         'email' => [
+            'dqdq@' => 'x-validation.values.email.dqdq@',
             'fwefw' => 'x-validation.values.email.fwefw',
         ],
         'name' => [

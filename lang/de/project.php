@@ -20,7 +20,7 @@ return [
     ],
     'member' => [
         'change_role' => 'Change role',
-        'last_login' => 'Last login :time ago',
+        'last_login' => 'Letzter Login vor :time',
         'remove' => 'Remove from Project',
     ],
     'members' => [

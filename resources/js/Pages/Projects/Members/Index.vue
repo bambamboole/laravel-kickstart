@@ -9,7 +9,11 @@ import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { hasProjectPermission } from '@/utils';
+import { diffForHumans, hasProjectPermission } from '@/utils';
+import { Inertia } from '@inertiajs/inertia';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
+import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid';
+import { formatDistanceToNow } from 'date-fns';
 
 const { t } = useTranslation();
 const props = usePage<{
@@ -30,10 +34,26 @@ const closeInviteMemberModal = () => {
     inviteMemberForm.reset();
 };
 const inviteMember = () => {
-    inviteMemberForm.post(route('project.members.invite', props.project.uuid), {
+    inviteMemberForm.post(route('project.invitations.create', props.project.uuid), {
         preserveScroll: true,
-        onSuccess: () => closeInviteMemberModal(),
+        onSuccess: () => {
+            closeInviteMemberModal();
+            Inertia.visit(route('project.members.index', props.project.uuid), { only: ['project'] });
+        },
     });
+};
+
+const deleteInvitation = (uuid: string) => {
+    console.log(uuid);
+    if (confirm('Are you sure you want to delete this invitation?')) {
+        const form = useForm({});
+        form.delete(route('project.invitations.delete', { projectUuid: props.project.uuid, invitationUuid: uuid }), {
+            preserveScroll: true,
+            onSuccess: () => {
+                Inertia.visit(route('project.members.index', props.project.uuid), { only: ['project'] });
+            },
+        });
+    }
 };
 </script>
 
@@ -128,23 +148,129 @@ const inviteMember = () => {
             </div>
         </Modal>
         <div class="py-6">{{ t('project.members.index.member_list') }}</div>
+
         <ul role="list" class="divide-y divide-gray-100">
-            <li v-for="member in props.project.members" :key="member.email" class="flex gap-x-4 py-5">
-                <div class="min-w-0">
-                    <p class="text-sm font-semibold leading-6 text-gray-900">
-                        {{ member.name }} ({{ member.role.name }})
-                    </p>
-                    <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ member.email }}</p>
+            <li v-for="member in props.project.members" :key="member.email" class="flex justify-between gap-x-6 py-5">
+                <div class="flex min-w-0 gap-x-4">
+                    <!--                    <img class="h-12 w-12 flex-none rounded-full bg-gray-50" :src="member.imageUrl" alt="" />-->
+                    <div class="min-w-0 flex-auto">
+                        <p class="text-sm font-semibold leading-6 text-gray-900">
+                            {{ member.name }}
+                        </p>
+                        <p class="mt-1 flex text-xs leading-5 text-gray-500">
+                            <a :href="`mailto:${member.email}`" class="truncate hover:underline">{{ member.email }}</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex shrink-0 items-center gap-x-6">
+                    <div class="hidden sm:flex sm:flex-col sm:items-end">
+                        <p class="text-sm leading-6 text-gray-900">{{ member.role.name }}</p>
+                        <p class="mt-1 text-xs leading-5 text-gray-500">
+                            <time :datetime="member.last_login_at">
+                                {{ t('project.member.last_login', { time: diffForHumans(member.last_login_at) }) }}
+                            </time>
+                        </p>
+                    </div>
+                    <Menu as="div" class="relative flex-none">
+                        <MenuButton class="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
+                            <span class="sr-only">Open options</span>
+                            <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
+                        </MenuButton>
+                        <transition
+                            enter-active-class="transition ease-out duration-100"
+                            enter-from-class="transform opacity-0 scale-95"
+                            enter-to-class="transform opacity-100 scale-100"
+                            leave-active-class="transition ease-in duration-75"
+                            leave-from-class="transform opacity-100 scale-100"
+                            leave-to-class="transform opacity-0 scale-95"
+                        >
+                            <MenuItems
+                                class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
+                            >
+                                <MenuItem v-slot="{ active }">
+                                    <a
+                                        href="#"
+                                        :class="[
+                                            active ? 'bg-gray-50' : '',
+                                            'block px-3 py-1 text-sm leading-6 text-gray-900',
+                                        ]"
+                                        >{{ t('project.member.change_role') }}</a
+                                    >
+                                </MenuItem>
+                                <MenuItem v-if="hasProjectPermission('project.members.remove')" v-slot="{ active }">
+                                    <a
+                                        href="#"
+                                        :class="[
+                                            active ? 'bg-gray-50' : '',
+                                            'block px-3 py-1 text-sm leading-6 text-gray-900',
+                                        ]"
+                                        >{{ t('project.member.remove') }}</a
+                                    >
+                                </MenuItem>
+                            </MenuItems>
+                        </transition>
+                    </Menu>
                 </div>
             </li>
         </ul>
+
         <div class="py-6">{{ t('project.members.index.invitation_list') }}</div>
         <ul role="list" class="divide-y divide-gray-100">
-            <li v-for="invitation in props.project.invitations" :key="invitation.email" class="flex gap-x-4 py-5">
-                <div class="min-w-0">
-                    <p class="text-sm font-semibold leading-6 text-gray-900">
-                        {{ invitation.email }}
-                    </p>
+            <li
+                v-for="invitation in props.project.invitations"
+                :key="invitation.email"
+                class="flex justify-between gap-x-6 py-5"
+            >
+                <div class="flex min-w-0 gap-x-4">
+                    <div class="min-w-0 flex-auto">
+                        <p class="text-sm font-semibold leading-6 text-gray-900">
+                            {{ invitation.email }}
+                        </p>
+                    </div>
+                </div>
+                <div class="flex shrink-0 items-center gap-x-6">
+                    <div class="hidden sm:flex sm:flex-col sm:items-end">
+                        <p class="text-sm leading-6 text-gray-900">{{ invitation.role.name }}</p>
+                        <p v-if="invitation.created_at" class="mt-1 text-xs leading-5 text-gray-500">
+                            <time :datetime="invitation.created_at">
+                                {{
+                                    t('project.invitation.created', {
+                                        time: formatDistanceToNow(invitation.created_at),
+                                    })
+                                }}
+                            </time>
+                        </p>
+                    </div>
+                    <Menu as="div" class="relative flex-none">
+                        <MenuButton class="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
+                            <span class="sr-only">Open options</span>
+                            <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
+                        </MenuButton>
+                        <transition
+                            enter-active-class="transition ease-out duration-100"
+                            enter-from-class="transform opacity-0 scale-95"
+                            enter-to-class="transform opacity-100 scale-100"
+                            leave-active-class="transition ease-in duration-75"
+                            leave-from-class="transform opacity-100 scale-100"
+                            leave-to-class="transform opacity-0 scale-95"
+                        >
+                            <MenuItems
+                                class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
+                            >
+                                <MenuItem v-if="hasProjectPermission('project.invitations.delete')" v-slot="{ active }">
+                                    <button
+                                        @click="deleteInvitation(invitation.uuid)"
+                                        :class="[
+                                            active ? 'bg-gray-50' : '',
+                                            'block px-3 py-1 text-sm leading-6 text-gray-900',
+                                        ]"
+                                    >
+                                        {{ t('project.invitation.delete') }}
+                                    </button>
+                                </MenuItem>
+                            </MenuItems>
+                        </transition>
+                    </Menu>
                 </div>
             </li>
         </ul>

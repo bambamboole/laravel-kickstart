@@ -9,12 +9,14 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     auth: {
         user: User;
     };
+    locale: string;
     sidebar: {
         main: Array<{
             name: string;
             icon: string;
             route: string;
             params?: Record<keyof any, unknown>;
+            permission?: string | null;
         }>;
         profile: Array<{
             name: string;

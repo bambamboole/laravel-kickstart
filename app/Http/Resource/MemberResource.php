@@ -17,6 +17,7 @@ class MemberResource extends JsonResource
             'uuid' => $this->resource->uuid,
             'email' => $this->resource->email,
             'name' => $this->resource->name,
+            'last_login_at' => $this->resource->last_login_at,
             'role' => new RoleResource($this->whenPivotLoaded(new ProjectMember(), function () {
                 return $this->resource->pivot->role;
             })),

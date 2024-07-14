@@ -23,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'email_verified_at',
+        'last_login_at',
     ];
 
     /**
@@ -59,5 +60,31 @@ class User extends Authenticatable implements MustVerifyEmail
             ->using(ProjectMember::class)
             ->withPivot('role_id')
             ->withTimestamps();
+    }
+
+    public function hasProjectPermission(Project|string|int $project, string $permission): bool
+    {
+        if (is_string($project)) {
+            $projectId = Project::query()->where('uuid', $project)->limit(1)->value('id');
+        } elseif (is_int($project)) {
+            $projectId = $project;
+        } else {
+            $projectId = $project->id;
+        }
+        $role = Role::query()
+            ->addSelect(
+                [
+                    'id' => ProjectMember::query()
+                        ->select('role_id')
+                        ->where('user_id', $this->id)
+                        ->where('project_id', $projectId),
+                ]
+            )->first();
+
+        if (! $role instanceof Role) {
+            return false;
+        }
+
+        return in_array($permission, $role->permissions);
     }
 }

@@ -13,7 +13,10 @@ class InvitationResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'uuid' => $this->resource->uuid,
             'email' => $this->resource->email,
+            'role' => new RoleResource($this->whenLoaded('role')),
+            'created_at' => $this->resource->created_at,
         ];
     }
 }

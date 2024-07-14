@@ -11,23 +11,8 @@ import HttpBackend, { HttpBackendOptions } from 'i18next-http-backend';
 import Toast, { PluginOptions } from 'vue-toastification';
 // Import the CSS or use your own!
 import 'vue-toastification/dist/index.css';
-
-i18next.use(HttpBackend).init<HttpBackendOptions>({
-    saveMissing: import.meta.env.VITE_ENV === 'local',
-    backend: {
-        withCredentials: true,
-        customHeaders: () => ({
-            'X-CSRF-TOKEN':
-                document.querySelector<HTMLElement>('meta[name="csrf-token"]')?.getAttribute('content') ?? '',
-        }),
-    },
-
-    lng: 'en',
-    interpolation: {
-        escapeValue: false,
-    },
-    fallbackLng: false,
-});
+import { setDefaultOptions } from 'date-fns';
+import { enUS, de } from 'date-fns/locale';
 
 const toastOptions: PluginOptions = {};
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -37,6 +22,40 @@ createInertiaApp({
     resolve: (name) =>
         resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob<DefineComponent>('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
+        const locale = props.initialPage.props.locale;
+        setDefaultOptions({
+            locale: locale === 'de' ? de : enUS,
+        });
+
+        console.log('locale', locale);
+        i18next.use(HttpBackend).init<HttpBackendOptions>({
+            saveMissing: import.meta.env.VITE_ENV === 'local' && locale === 'en',
+            backend: {
+                loadPath: (lngs, namespaces) => {
+                    return `/locales/${lngs[0]}/${namespaces[0]}.json`;
+                },
+                addPath: (lng, ns) => {
+                    // weird bug , that if locale de that lng becomes dev. Don't know whats going on
+                    if (lng === 'dev') {
+                        lng = 'de';
+                    }
+                    return `/locales/add/${lng}/${ns}`;
+                },
+                withCredentials: true,
+                customHeaders: () => ({
+                    'X-CSRF-TOKEN':
+                        document.querySelector<HTMLElement>('meta[name="csrf-token"]')?.getAttribute('content') ?? '',
+                }),
+            },
+
+            lng: locale,
+            supportedLngs: ['en', 'de'],
+            interpolation: {
+                escapeValue: false,
+            },
+            fallbackLng: 'en',
+        });
+
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)

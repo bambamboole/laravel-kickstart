@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import {
     Dialog,
@@ -14,6 +14,8 @@ import * as Icons from '@heroicons/vue/24/outline';
 import { Bars3Icon, XMarkIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 import Toast from '@/Components/Toast.vue';
 import { useTranslation } from 'i18next-vue';
+import { hasProjectPermission } from '@/utils';
+
 const { t } = useTranslation();
 const iconComponents = Object.fromEntries(Object.entries(Icons).map(([key, value]) => [key, value]));
 const sidebarOpen = ref(false);
@@ -76,7 +78,15 @@ const sidebarOpen = ref(false);
                                     <ul role="list" class="flex flex-1 flex-col gap-y-7">
                                         <li>
                                             <ul role="list" class="-mx-2 space-y-1">
-                                                <li v-for="item in $page.props.sidebar.main" :key="item.name">
+                                                <li
+                                                    v-for="item in $page.props.sidebar.main"
+                                                    :key="item.name"
+                                                    v-show="
+                                                        typeof item.permission === 'string'
+                                                            ? hasProjectPermission(item.permission)
+                                                            : true
+                                                    "
+                                                >
                                                     <Link
                                                         :href="route(item.route, item.params)"
                                                         :class="[
@@ -125,7 +135,11 @@ const sidebarOpen = ref(false);
                     <ul role="list" class="flex flex-1 flex-col gap-y-7">
                         <li>
                             <ul role="list" class="-mx-2 space-y-1">
-                                <li v-for="item in $page.props.sidebar.main" :key="item.name">
+                                <li
+                                    v-for="item in $page.props.sidebar.main"
+                                    :key="item.name"
+                                    v-show="hasProjectPermission(item.permission)"
+                                >
                                     <Link
                                         :href="route(item.route, item.params)"
                                         :class="[
@@ -157,15 +171,15 @@ const sidebarOpen = ref(false);
                                         <Link
                                             :href="route('dashboard')"
                                             class="block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
-                                            >{{ t('sidebar.back_to_dashboard') }}</Link
-                                        >
+                                            >{{ t('sidebar.back_to_dashboard') }}
+                                        </Link>
                                     </li>
                                     <li v-for="subItem in $page.props.sidebar.profile" :key="subItem.name">
                                         <Link
                                             :href="route(subItem.route)"
                                             class="block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
-                                            >{{ subItem.name }}</Link
-                                        >
+                                            >{{ subItem.name }}
+                                        </Link>
                                     </li>
                                 </DisclosurePanel>
                                 <DisclosureButton

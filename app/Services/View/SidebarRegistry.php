@@ -10,13 +10,14 @@ class SidebarRegistry
 
     private array $profileItems = [];
 
-    public function addMainItem(string $name, string $icon, string $route, ?\Closure $params): void
+    public function addMainItem(string $name, string $icon, string $route, ?\Closure $params, ?string $permission = null): void
     {
         $this->mainItems[] = [
             'name' => $name,
             'route' => $route,
             'icon' => $icon,
             'params' => $params,
+            'permission' => $permission,
         ];
     }
 
@@ -46,6 +47,7 @@ class SidebarRegistry
                 'icon' => $item['icon'],
                 'route' => $item['route'],
                 'params' => is_callable($item['params']) ? $item['params'](request()) : [],
+                'permission' => $item['permission'],
             ], $this->mainItems),
             'profile' => $this->profileItems,
         ];

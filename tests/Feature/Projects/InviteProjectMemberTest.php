@@ -16,7 +16,7 @@ test('member can be invited', function () {
 
     $this->actingAs($user)
         ->post(
-            route('project.members.invite', $project->uuid),
+            route('project.invitations.create', $project->uuid),
             [
                 'email' => 'foo@bar.com',
                 'role_uuid' => $role->uuid,
@@ -28,7 +28,7 @@ test('member can be invited', function () {
     $invitation = $project->invitations()->first();
     $this->assertInstanceOf(ProjectInvitation::class, $invitation);
 
-    $this->get(URL::signedRoute('project-invitation.accept', $invitation->uuid))
+    $this->get(URL::signedRoute('project.invitations.accept', ['uuid' => $invitation->uuid]))
         ->assertSessionHas('from_project_invitation', $invitation->uuid)
         ->assertInertia(function (AssertableInertia $assert) {
             $assert->component('Auth/RegisterFromInvitation');

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Projects\ProjectController;
+use App\Http\Controllers\Projects\ProjectInvitationController;
 use App\Http\Controllers\Projects\ProjectMembersController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -35,8 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/projects/{uuid}', [ProjectController::class, 'delete'])->name('project.delete');
     Route::get('/projects/{uuid}/settings', [ProjectController::class, 'settings'])->name('project.settings');
     Route::get('/projects/{uuid}/members', [ProjectMembersController::class, 'index'])->name('project.members.index');
-    Route::post('/projects/{uuid}/members', [ProjectMembersController::class, 'invite'])->name('project.members.invite');
+    Route::post('/projects/{uuid}/invitations', [ProjectInvitationController::class, 'create'])->name('project.invitations.create');
+    Route::delete('/projects/{projectUuid}/invitations/{invitationUuid}', [ProjectInvitationController::class, 'delete'])->name('project.invitations.delete');
 });
-Route::get('/project-invitations/{uuid}', [ProjectMembersController::class, 'accept'])->middleware(['signed'])->name('project-invitation.accept');
+Route::get('/accept-project-invitation/{uuid}', [ProjectInvitationController::class, 'accept'])->middleware(['signed'])->name('project.invitations.accept');
 
 require __DIR__.'/auth.php';
