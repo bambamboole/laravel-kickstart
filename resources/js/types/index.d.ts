@@ -5,11 +5,17 @@ export interface User {
     email_verified_at: string;
 }
 
+type LocaleValues = 'en' | 'de';
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
     };
-    locale: string;
+    locale: {
+        available: Array<LocaleValues>;
+        current: LocaleValues;
+        fallback: LocaleValues;
+    };
     sidebar: {
         main: Array<{
             name: string;

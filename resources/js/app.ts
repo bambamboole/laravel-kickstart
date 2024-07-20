@@ -12,7 +12,7 @@ import Toast, { PluginOptions } from 'vue-toastification';
 // Import the CSS or use your own!
 import 'vue-toastification/dist/index.css';
 import { setDefaultOptions } from 'date-fns';
-import { enUS, de } from 'date-fns/locale';
+import { enUS as en, de } from 'date-fns/locale';
 
 const toastOptions: PluginOptions = {};
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -23,22 +23,18 @@ createInertiaApp({
         resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob<DefineComponent>('./Pages/**/*.vue')),
     setup({ el, App, props, plugin }) {
         const locale = props.initialPage.props.locale;
+        const dateLocales = { de, en };
         setDefaultOptions({
-            locale: locale === 'de' ? de : enUS,
+            locale: dateLocales[locale.current],
         });
 
-        console.log('locale', locale);
         i18next.use(HttpBackend).init<HttpBackendOptions>({
-            saveMissing: import.meta.env.VITE_ENV === 'local' && locale === 'en',
+            saveMissing: import.meta.env.VITE_ENV === 'local' && locale.current === 'en',
             backend: {
                 loadPath: (lngs, namespaces) => {
                     return `/locales/${lngs[0]}/${namespaces[0]}.json`;
                 },
                 addPath: (lng, ns) => {
-                    // weird bug , that if locale de that lng becomes dev. Don't know whats going on
-                    if (lng === 'dev') {
-                        lng = 'de';
-                    }
                     return `/locales/add/${lng}/${ns}`;
                 },
                 withCredentials: true,
@@ -48,12 +44,12 @@ createInertiaApp({
                 }),
             },
 
-            lng: locale,
-            supportedLngs: ['en', 'de'],
+            lng: locale.current,
+            supportedLngs: locale.available,
             interpolation: {
                 escapeValue: false,
             },
-            fallbackLng: 'en',
+            fallbackLng: locale.fallback,
         });
 
         createApp({ render: () => h(App, props) })
