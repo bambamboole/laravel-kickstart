@@ -13,7 +13,6 @@ export function hasProjectPermission(permission: string | null | undefined): boo
     if (!props.project) {
         return false;
     }
-    console.log(permission);
     return Object.values(
         props.project.members.find((member: any) => member.email === props.auth.user.email).role.permissions,
     ).includes(permission);

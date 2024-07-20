@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Head, router, useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import ProjectLayout from '@/Layouts/ProjectLayout.vue';
 import { useTranslation } from 'i18next-vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import TextInput from '@/Components/TextInput.vue';
 import Modal from '@/Components/Modal.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -10,16 +10,18 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { diffForHumans, hasProjectPermission } from '@/utils';
-import { Inertia } from '@inertiajs/inertia';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid';
 import { formatDistanceToNow } from 'date-fns';
 
 const { t } = useTranslation();
-const props = usePage<{
-    project: { members: Array<{ email: string; name: string }> };
-    roles: Array<{ uuid: string; name: string; permissions: Array<string> }>;
-}>().props;
+const props = computed(
+    () =>
+        usePage<{
+            project: { members: Array<{ email: string; name: string }> };
+            roles: Array<{ uuid: string; name: string; permissions: Array<string> }>;
+        }>().props,
+);
 const inviteMemberForm = useForm({
     email: '',
     role_uuid: '',
@@ -34,26 +36,26 @@ const closeInviteMemberModal = () => {
     inviteMemberForm.reset();
 };
 const inviteMember = () => {
-    inviteMemberForm.post(route('project.invitations.create', props.project.uuid), {
+    inviteMemberForm.post(route('project.invitations.create', props.value.project.uuid), {
         preserveScroll: true,
         onSuccess: () => {
             closeInviteMemberModal();
-            Inertia.visit(route('project.members.index', props.project.uuid), { only: ['project'] });
         },
     });
 };
 
 const deleteInvitation = (uuid: string) => {
-    console.log(uuid);
-    if (confirm('Are you sure you want to delete this invitation?')) {
-        const form = useForm({});
-        form.delete(route('project.invitations.delete', { projectUuid: props.project.uuid, invitationUuid: uuid }), {
-            preserveScroll: true,
-            onSuccess: () => {
-                Inertia.visit(route('project.members.index', props.project.uuid), { only: ['project'] });
-            },
-        });
-    }
+    const form = useForm({});
+    form.delete(route('project.invitations.delete', { projectUuid: props.value.project.uuid, invitationUuid: uuid }), {
+        preserveScroll: true,
+    });
+};
+
+const removeMember = (uuid: string) => {
+    const form = useForm({});
+    form.delete(route('project.members.delete', { projectUuid: props.value.project.uuid, memberUuid: uuid }), {
+        preserveScroll: true,
+    });
 };
 </script>
 
@@ -198,14 +200,16 @@ const deleteInvitation = (uuid: string) => {
                                     >
                                 </MenuItem>
                                 <MenuItem v-if="hasProjectPermission('project.members.remove')" v-slot="{ active }">
-                                    <a
-                                        href="#"
+                                    <button
+                                        type="button"
+                                        @click="removeMember(member.uuid)"
                                         :class="[
                                             active ? 'bg-gray-50' : '',
                                             'block px-3 py-1 text-sm leading-6 text-gray-900',
                                         ]"
-                                        >{{ t('project.member.remove') }}</a
                                     >
+                                        {{ t('project.member.remove') }}
+                                    </button>
                                 </MenuItem>
                             </MenuItems>
                         </transition>

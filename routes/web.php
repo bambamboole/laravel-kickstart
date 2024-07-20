@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/projects/{uuid}', [ProjectController::class, 'delete'])->name('project.delete');
     Route::get('/projects/{uuid}/settings', [ProjectController::class, 'settings'])->name('project.settings');
     Route::get('/projects/{uuid}/members', [ProjectMembersController::class, 'index'])->name('project.members.index');
+    Route::delete('/projects/{projectUuid}/members/{memberUuid}', [ProjectMembersController::class, 'delete'])->name('project.members.delete');
     Route::post('/projects/{uuid}/invitations', [ProjectInvitationController::class, 'create'])->name('project.invitations.create');
     Route::delete('/projects/{projectUuid}/invitations/{invitationUuid}', [ProjectInvitationController::class, 'delete'])->name('project.invitations.delete');
 });
