@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Project;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -13,10 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         Role::factory()->create(['name' => 'owner']);
-        Role::factory()->create(['name' => 'editor', 'permissions' => ['project.members.view']]);
+        $editorRole = Role::factory()->create(['name' => 'editor', 'permissions' => ['project.members.view']]);
 
         $user = User::factory()
             ->withProject(['name' => 'test-project'])
@@ -25,6 +24,14 @@ class DatabaseSeeder extends Seeder
                 'email' => 'admin@admin.com',
             ]);
 
-        $user->projects()->first()->createToken('test-token');
+        /** @var Project $project */
+        $project = $user->projects()->first();
+        $project->invitations()->create([
+            'email' => 'foo@bar.com',
+            'role_id' => $editorRole->id,
+        ]);
+        $token = $project->createToken('test-token');
+        $this->command->info("Token: {$token->plainTextToken}");
+        $token->accessToken->update(['last_used_at' => now()]);
     }
 }
