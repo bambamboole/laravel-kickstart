@@ -37,7 +37,7 @@ class ProjectController
     {
         abort_unless(auth()->user()->hasProjectPermission($id, 'project.settings.view'), 403);
 
-        $project = auth()->user()->projects()->where('uuid', $id)->with(['members.pivot.role'])->firstOrFail();
+        $project = auth()->user()->projects()->where('uuid', $id)->with(['members.pivot.role', 'tokens'])->firstOrFail();
         $resource = new ProjectResource($project);
         $resource::withoutWrapping();
 

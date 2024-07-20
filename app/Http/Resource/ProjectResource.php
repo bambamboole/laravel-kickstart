@@ -17,6 +17,7 @@ class ProjectResource extends JsonResource
             'name' => $this->resource->name,
             'members' => MemberResource::collection($this->whenLoaded('members')),
             'invitations' => InvitationResource::collection($this->whenLoaded('invitations')),
+            'tokens' => TokenResource::collection($this->whenLoaded('tokens')),
         ];
     }
 }

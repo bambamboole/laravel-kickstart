@@ -50,4 +50,8 @@ return [
             'title' => 'Invite a new member',
         ],
     ],
+    'token' => [
+        'list' => 'Your Projects API tokens',
+        'never_used' => 'Not yet used',
+    ],
 ];

@@ -18,11 +18,13 @@ class DatabaseSeeder extends Seeder
         Role::factory()->create(['name' => 'owner']);
         Role::factory()->create(['name' => 'editor', 'permissions' => ['project.members.view']]);
 
-        User::factory()
+        $user = User::factory()
             ->withProject(['name' => 'test-project'])
             ->create([
                 'name' => 'bambamboole',
                 'email' => 'admin@admin.com',
             ]);
+
+        $user->projects()->first()->createToken('test-token');
     }
 }

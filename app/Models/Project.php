@@ -6,10 +6,11 @@ use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Sanctum\HasApiTokens;
 
 class Project extends Model
 {
-    use EagerLoadPivotTrait, HasFactory, HasUuidColumn;
+    use EagerLoadPivotTrait, HasFactory, HasUuidColumn, HasApiTokens;
 
     public function members(): BelongsToMany
     {
