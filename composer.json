@@ -1,10 +1,13 @@
 {
-    "name": "laravel/laravel",
+    "name": "bambamboole/laravel-kickstart",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "An opinionated starter kit for Laravel projects.",
     "keywords": [
         "laravel",
-        "framework"
+        "framework",
+        "starterkit",
+        "inertia",
+        "vue"
     ],
     "license": "MIT",
     "require": {
