@@ -17,6 +17,7 @@ class ProjectInvitationController
 {
     public function create(InviteProjectMemberRequest $request, string $id)
     {
+        abort_unless(auth()->user()->hasProjectPermission($id, 'project.members.invite'), 403);
         /** @var \App\Models\Project $project */
         $project = auth()->user()->projects()->where('uuid', $id)->firstOrFail();
         $role = Role::query()->where('uuid', $request->role_uuid)->firstOrFail();

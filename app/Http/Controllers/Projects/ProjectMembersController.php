@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Projects;
 
 use App\Http\Resource\ProjectResource;
 use App\Http\Resource\RoleResource;
+use App\Models\Project;
 use App\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -13,6 +14,8 @@ class ProjectMembersController
 {
     public function index(string $id)
     {
+        abort_unless(auth()->user()->hasProjectPermission($id, 'project.members.view'), 403);
+
         $project = auth()
             ->user()
             ->projects()
@@ -35,6 +38,9 @@ class ProjectMembersController
 
     public function delete(string $projectUuid, string $memberUuid)
     {
+        abort_unless(auth()->user()->hasProjectPermission($projectUuid, 'project.members.delete'), 403);
+
+        /** @var Project $project */
         $project = auth()
             ->user()
             ->projects()

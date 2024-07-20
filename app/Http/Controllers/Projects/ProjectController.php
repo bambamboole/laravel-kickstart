@@ -35,6 +35,8 @@ class ProjectController
 
     public function settings(string $id)
     {
+        abort_unless(auth()->user()->hasProjectPermission($id, 'project.settings.view'), 403);
+
         $project = auth()->user()->projects()->where('uuid', $id)->with(['members.pivot.role'])->firstOrFail();
         $resource = new ProjectResource($project);
         $resource::withoutWrapping();
@@ -49,6 +51,8 @@ class ProjectController
 
     public function delete(Request $request, string $id)
     {
+        abort_unless(auth()->user()->hasProjectPermission($id, 'project.delete'), 403);
+
         $project = auth()->user()->projects()->where('uuid', $id)->firstOrFail();
 
         $request->validate([

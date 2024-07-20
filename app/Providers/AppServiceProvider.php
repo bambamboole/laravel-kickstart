@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $permissionRegistry->add('project.settings.view');
         $permissionRegistry->add('project.members.view');
         $permissionRegistry->add('project.members.invite');
-        $permissionRegistry->add('project.members.remove');
+        $permissionRegistry->add('project.members.delete');
         $permissionRegistry->add('project.invitations.delete');
         $permissionRegistry->add('project.api-token.create');
         $permissionRegistry->add('project.api-token.delete');

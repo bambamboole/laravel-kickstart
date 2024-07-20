@@ -199,7 +199,7 @@ const removeMember = (uuid: string) => {
                                         >{{ t('project.member.change_role') }}</a
                                     >
                                 </MenuItem>
-                                <MenuItem v-if="hasProjectPermission('project.members.remove')" v-slot="{ active }">
+                                <MenuItem v-if="hasProjectPermission('project.members.delete')" v-slot="{ active }">
                                     <button
                                         type="button"
                                         @click="removeMember(member.uuid)"
