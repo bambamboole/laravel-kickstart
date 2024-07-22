@@ -22,7 +22,7 @@ const sidebarOpen = ref(false);
 </script>
 
 <template>
-    <div>
+    <div class="h-full bg-gray-100">
         <Toast />
         <TransitionRoot as="template" :show="sidebarOpen">
             <Dialog class="relative z-50 lg:hidden" @close="sidebarOpen = false">
@@ -211,9 +211,9 @@ const sidebarOpen = ref(false);
             </div>
         </div>
 
-        <main class="lg:pl-72">
+        <main class="h-full bg-gray-100 lg:pl-72">
             <header class="hidden h-16 w-full border-b bg-white lg:fixed lg:block" v-if="$slots.header">
-                <div class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
+                <div class="max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
             </header>

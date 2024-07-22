@@ -2,7 +2,6 @@
 
 namespace App\Http\Resource;
 
-use App\Models\Role;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Laravel\Sanctum\PersonalAccessToken;
 

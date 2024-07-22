@@ -50,7 +50,49 @@ return [
             'title' => 'Invite a new member',
         ],
     ],
+    'settings' => [
+        'createApiTokenModal' => [
+            'button' => 'Create new API token',
+            'cancel' => 'Cancel',
+            'description' => 'Use API tokens to integrate your project with other services. You can create multiple tokens with different abilities to control access.',
+            'form' => [
+                'abilities' => [
+                    'label' => 'Abilities',
+                ],
+                'name' => [
+                    'label' => 'Name',
+                    'placeholder' => 'Choose a name for the token...',
+                ],
+            ],
+            'title' => 'Create new API token',
+        ],
+        'description' => 'You will find all the project related settings here.',
+        'header' => 'Project Settings',
+        'title' => 'Project Settings',
+    ],
     'token' => [
+        'ability' => [
+            'info' => [
+                'description' => 'Get general project information',
+            ],
+            'invitations' => [
+                'delete' => [
+                    'description' => 'Delete project invitations',
+                ],
+            ],
+            'members' => [
+                'invite' => [
+                    'description' => 'Invite new members to the project',
+                ],
+                'remove' => [
+                    'description' => 'Remove members from the project',
+                ],
+            ],
+        ],
+        'created' => 'Token successfully created',
+        'delete' => 'Delete',
+        'deleted' => 'x-project.token.deleted',
+        'last_used_at' => 'Last used :time ago',
         'list' => 'Your Projects API tokens',
         'never_used' => 'Not yet used',
     ],

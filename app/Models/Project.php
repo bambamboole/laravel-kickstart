@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Project extends Model
 {
-    use EagerLoadPivotTrait, HasFactory, HasUuidColumn, HasApiTokens;
+    use EagerLoadPivotTrait, HasApiTokens, HasFactory, HasUuidColumn;
 
     public function members(): BelongsToMany
     {

@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Projects\ProjectApiTokenController;
 use App\Http\Controllers\Projects\ProjectController;
 use App\Http\Controllers\Projects\ProjectInvitationController;
 use App\Http\Controllers\Projects\ProjectMembersController;
@@ -39,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/projects/{projectUuid}/members/{memberUuid}', [ProjectMembersController::class, 'delete'])->name('project.members.delete');
     Route::post('/projects/{uuid}/invitations', [ProjectInvitationController::class, 'create'])->name('project.invitations.create');
     Route::delete('/projects/{projectUuid}/invitations/{invitationUuid}', [ProjectInvitationController::class, 'delete'])->name('project.invitations.delete');
+    Route::post('/projects/{uuid}/api-tokens', [ProjectApiTokenController::class, 'create'])->name('project.api-tokens.create');
+    Route::delete('/projects/{projectUuid}/api-tokens/{tokenId}', [ProjectApiTokenController::class, 'delete'])->name('project.api-tokens.delete');
 });
 Route::get('/accept-project-invitation/{uuid}', [ProjectInvitationController::class, 'accept'])->middleware(['signed'])->name('project.invitations.accept');
 

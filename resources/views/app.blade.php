@@ -18,7 +18,7 @@
         @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
     </head>
-    <body class="h-full bg-white font-sans antialiased">
+    <body class="h-full bg-gray-100 font-sans antialiased">
         @inertia
         {{-- This snippet removes the annoying margin-bottom on the body tag if the debug bar is enabled --}}
         @if (config('app.debug'))
