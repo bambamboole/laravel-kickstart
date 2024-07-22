@@ -27,9 +27,18 @@ Every executed translation in PHP and Javascript will be dumped automatically in
 - Full Vue test setup with coverage support 
 - Code lint setup via PHP-CS-Fixer and Prettier for PHP, Blade, Javascript and Tailwind class sorting
 
+## Installation
+1. Clone the repository
+2. Copy the `.env.example` to `.env` and adjust the settings
+3. Run `composer install`
+4. Run `php artisan key:generate`
+5. Run `npm install`
+6. Run `npm run dev`
+7. Run `php artisan reverb:start`
+
 ## Todos
 Feel free to contribute to this project. Here are some ideas for the next steps:
-- API token management (ongoing)
+- Make API abilities dynamic
 - Add API endpoints for managing invitations and members
 - Replace all hard coded strings with translations
 - Add more tests
