@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Projects;
 
+use App\Enum\ApiAbility;
 use App\Http\Requests\Projects\CreateProjectRequest;
 use App\Http\Resource\ProjectResource;
 use App\Models\Role;
@@ -45,13 +46,7 @@ class ProjectController
             'Projects/Settings',
             [
                 'project' => $resource,
-                'abilities' => [
-                    // @TODO make this list dynamic. But these are not the same as the permissions.
-                    'info',
-                    'members.invite',
-                    'members.remove',
-                    'invitations.delete',
-                ],
+                'abilities' => ApiAbility::cases(),
             ]
         );
     }
