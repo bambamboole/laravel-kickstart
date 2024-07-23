@@ -42,6 +42,7 @@ Feel free to contribute to this project. Here are some ideas for the next steps:
 - Add API endpoints for managing invitations and members
 - Replace all hard coded strings with translations
 - Add more tests
+- Add OpenAPI specs workflow
 - Make readme more detailed
 - Add two factor authentication (multiple devices per user)
 - Add CI/CD setup for PHP and Javascript
@@ -53,6 +54,7 @@ Feel free to contribute to this project. Here are some ideas for the next steps:
 These are some ideas which are not yet planned but could be interesting for the future. If you are interested in one of these, feel free to hit me up to discuss, for sure also with other ideas.
 - Make the whole starter kit an installable package which can publish all the needed files and setup the project
 - yubikey support for two factor authentication
+- Add Storybook.js for frontend components
 - ??? Your idea ???
 
 ## License
