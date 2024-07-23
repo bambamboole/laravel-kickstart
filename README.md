@@ -16,7 +16,7 @@ I am looking for support and feedback to make this project better and more usefu
 - Laravel Reverb for broadcasting Events via Websockets and Laravel Echo for listening to them
 
 ## Features
-- Multi tenant capable via a setup where users can be in multiple projects
+- Multi tenant capable setup where users can be in multiple projects
 - Manage invitations for Projects
 - Projects have API tokens for authentication which are independent from users. This allows for easier handling while offboarding members
 - Permission management via roles where a user can have one role per project. Permissions are defined in code, while roles are living in the database and are acting as container for permissions
