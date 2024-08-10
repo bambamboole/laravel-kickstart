@@ -62,7 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
-    public function hasProjectPermission(Project|string|int $project, string $permission): bool
+    public function hasProjectPermission(Project|string|int $project, string|\BackedEnum $permission): bool
     {
         if (is_string($project)) {
             $projectId = Project::query()->where('uuid', $project)->limit(1)->value('id');
@@ -85,6 +85,6 @@ class User extends Authenticatable implements MustVerifyEmail
             return false;
         }
 
-        return in_array($permission, $role->permissions);
+        return in_array($permission instanceof \BackedEnum ? $permission->value : $permission, $role->permissions);
     }
 }
