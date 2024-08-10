@@ -12,19 +12,11 @@ use Inertia\Inertia;
 
 class ProjectMembersController
 {
-    public function index(string $id)
+    public function index(Project $project)
     {
-        abort_unless(auth()->user()->hasProjectPermission($id, 'project.members.view'), 403);
-
-        $project = auth()
-            ->user()
-            ->projects()
-            ->where('uuid', $id)
-            ->with(['invitations', 'invitations.role', 'members.pivot.role'])
-            ->firstOrFail();
         $roles = RoleResource::collection(Role::query()->get());
         $roles::withoutWrapping();
-        $resource = new ProjectResource($project);
+        $resource = new ProjectResource($project->load(['invitations', 'invitations.role', 'members.pivot.role']));
         $resource::withoutWrapping();
 
         return Inertia::render(
@@ -36,30 +28,20 @@ class ProjectMembersController
         );
     }
 
-    public function delete(string $projectUuid, string $memberUuid)
+    public function delete(Project $project, string $uuid)
     {
-        abort_unless(auth()->user()->hasProjectPermission($projectUuid, 'project.members.delete'), 403);
-
-        /** @var Project $project */
-        $project = auth()
-            ->user()
-            ->projects()
-            ->where('uuid', $projectUuid)
-            ->firstOrFail();
-
-        if (auth()->user()->uuid === $memberUuid) {
+        if (auth()->user()->uuid === $uuid) {
             return redirect()->back()->with('error', 'You cannot remove yourself from the project');
         }
 
         Validator::validate([
-            'projectUuid' => $projectUuid,
-            'memberUuid' => $memberUuid,
+            'uuid' => $uuid,
         ], [
-            'memberUuid' => ['required', 'uuid', Rule::in($project->members->pluck('uuid'))],
+            'uuid' => ['required', 'uuid', Rule::in($project->members->pluck('uuid'))],
         ]);
 
-        $project->members()->detach($memberUuid);
+        $project->members()->detach($uuid);
 
-        return redirect()->route('project.members.index', ['uuid' => $projectUuid]);
+        return redirect()->route('project.members.index', $project);
     }
 }

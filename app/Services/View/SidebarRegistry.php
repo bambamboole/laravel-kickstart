@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Services\View;
 
@@ -10,7 +8,7 @@ class SidebarRegistry
 
     private array $profileItems = [];
 
-    public function addMainItem(string $name, string $icon, string $route, ?\Closure $params, ?string $permission = null): void
+    public function addMainItem(string $name, string $icon, string $route, ?\Closure $params, string|\BackedEnum|null $permission = null): void
     {
         $this->mainItems[] = [
             'name' => $name,
@@ -47,7 +45,7 @@ class SidebarRegistry
                 'icon' => $item['icon'],
                 'route' => $item['route'],
                 'params' => is_callable($item['params']) ? $item['params'](request()) : [],
-                'permission' => $item['permission'],
+                'permission' => $item['permission'] instanceof \BackedEnum ? $item['permission']->value : $item['permission'],
             ], $this->mainItems),
             'profile' => $this->profileItems,
         ];

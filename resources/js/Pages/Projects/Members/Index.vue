@@ -46,14 +46,14 @@ const inviteMember = () => {
 
 const deleteInvitation = (uuid: string) => {
     const form = useForm({});
-    form.delete(route('project.invitations.delete', { projectUuid: props.value.project.uuid, invitationUuid: uuid }), {
+    form.delete(route('project.invitations.delete', { project: props.value.project.uuid, uuid: uuid }), {
         preserveScroll: true,
     });
 };
 
 const removeMember = (uuid: string) => {
     const form = useForm({});
-    form.delete(route('project.members.delete', { projectUuid: props.value.project.uuid, memberUuid: uuid }), {
+    form.delete(route('project.members.delete', { project: props.value.project.uuid, uuid: uuid }), {
         preserveScroll: true,
     });
 };

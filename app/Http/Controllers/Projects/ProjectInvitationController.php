@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Projects;
 
 use App\Http\Requests\Projects\InviteProjectMemberRequest;
 use App\Mail\ProjectInvitationMail;
+use App\Models\Project;
 use App\Models\ProjectInvitation;
 use App\Models\Role;
 use App\Models\User;
@@ -15,11 +16,8 @@ use Inertia\Inertia;
 
 class ProjectInvitationController
 {
-    public function create(InviteProjectMemberRequest $request, string $id)
+    public function create(InviteProjectMemberRequest $request, Project $project)
     {
-        abort_unless(auth()->user()->hasProjectPermission($id, 'project.members.invite'), 403);
-        /** @var \App\Models\Project $project */
-        $project = auth()->user()->projects()->where('uuid', $id)->firstOrFail();
         $role = Role::query()->where('uuid', $request->role_uuid)->firstOrFail();
 
         try {
@@ -40,7 +38,7 @@ class ProjectInvitationController
             )
         );
 
-        return redirect()->route('project.members.index', $project->uuid)->with('success', 'Invitation sent!');
+        return redirect()->route('project.members.index', $project)->with('success', 'Invitation sent!');
     }
 
     public function accept(string $uuid)
@@ -59,12 +57,10 @@ class ProjectInvitationController
         return redirect()->route('project.members.index', $invitation->project->uuid)->with('success', 'Invitation accepted!');
     }
 
-    public function delete(string $projectUuid, string $invitationUuid)
+    public function delete(Project $project, string $uuid)
     {
-        abort_unless(auth()->user()->hasProjectPermission($projectUuid, 'project.invitations.delete'), 403);
-        $invitation = ProjectInvitation::query()->where('uuid', $invitationUuid)->with('project')->firstOrFail();
-        $invitation->delete();
+        $project->invitations()->where('uuid', $uuid)->delete();
 
-        return redirect()->route('project.members.index', $invitation->project->uuid)->with('success', 'Invitation deleted!');
+        return redirect()->route('project.members.index', $project)->with('success', 'Invitation deleted!');
     }
 }

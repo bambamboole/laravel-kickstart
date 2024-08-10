@@ -18,6 +18,10 @@ export function hasProjectPermission(permission: string | null | undefined): boo
     ).includes(permission);
 }
 
+export function hasAnyProjectPermission(permissions: string[]): boolean {
+    return permissions.some((permission) => hasProjectPermission(permission));
+}
+
 export function parseDate(utcDateString: string): Date {
     const date = fromZonedTime(utcDateString, 'UTC');
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enum\Permission;
 use App\Services\Auth\PermissionRegistry;
 use App\Services\View\SidebarRegistry;
 use Illuminate\Auth\Events\Login;
@@ -28,17 +29,10 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(Login::class, function (Login $event) {
             $event->user->update(['last_login_at' => now()]);
         });
-        $permissionRegistry->add('project.delete');
-        $permissionRegistry->add('project.settings.view');
-        $permissionRegistry->add('project.members.view');
-        $permissionRegistry->add('project.members.invite');
-        $permissionRegistry->add('project.members.delete');
-        $permissionRegistry->add('project.invitations.delete');
-        $permissionRegistry->add('project.api-token.create');
-        $permissionRegistry->add('project.api-token.delete');
-        $sidebarRegistry->addMainItem('Overview', 'HomeIcon', 'project.overview', fn (Request $request) => ['uuid' => $request->route('uuid')]);
-        $sidebarRegistry->addMainItem('Settings', 'CogIcon', 'project.settings', fn (Request $request) => ['uuid' => $request->route('uuid')]);
-        $sidebarRegistry->addMainItem('Members', 'UsersIcon', 'project.members.index', fn (Request $request) => ['uuid' => $request->route('uuid')], 'project.members.view');
+        $permissionRegistry->add(Permission::class);
+        $sidebarRegistry->addMainItem('Overview', 'HomeIcon', 'project.overview', fn (Request $request) => ['project' => $request->route('project')]);
+        $sidebarRegistry->addMainItem('Settings', 'CogIcon', 'project.settings', fn (Request $request) => ['project' => $request->route('project')], Permission::PROJECT_SETTINGS_VIEW);
+        $sidebarRegistry->addMainItem('Members', 'UsersIcon', 'project.members.index', fn (Request $request) => ['project' => $request->route('project')], Permission::PROJECT_MEMBERS_VIEW);
         $sidebarRegistry->addProfileItem('Profile', 'profile.edit');
         $sidebarRegistry->addProfileItem('Logout', 'logout');
     }

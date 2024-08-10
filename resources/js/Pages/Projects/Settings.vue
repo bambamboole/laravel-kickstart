@@ -2,7 +2,7 @@
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import ProjectLayout from '@/Layouts/ProjectLayout.vue';
 import DeleteProjectForm from '@/Pages/Projects/Partials/DeleteProjectForm.vue';
-import { diffForHumans, hasProjectPermission } from '@/utils';
+import { diffForHumans, hasAnyProjectPermission, hasProjectPermission } from '@/utils';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid';
 import { useTranslation } from 'i18next-vue';
@@ -19,11 +19,11 @@ const props = computed(
     () =>
         usePage<{
             project: { tokens: Array<{ id: string; int: string; abilities: Array<string> }> };
-        }>().props,
+        }>().props
 );
 const createApiTokenForm = useForm({
     name: '',
-    abilities: [],
+    abilities: []
 });
 const creatingApiToken = ref(false);
 const openCreateApiTokenModal = () => {
@@ -38,14 +38,14 @@ const createApiToken = () => {
         preserveScroll: true,
         onSuccess: () => {
             closeCreateApiTokenModal();
-        },
+        }
     });
 };
 
 const deleteApiToken = (id: string) => {
     const form = useForm({});
-    form.delete(route('project.api-tokens.delete', { projectUuid: props.value.project.uuid, tokenId: id }), {
-        preserveScroll: true,
+    form.delete(route('project.api-tokens.delete', { project: props.value.project.uuid, tokenId: id }), {
+        preserveScroll: true
     });
 };
 </script>
@@ -64,7 +64,7 @@ const deleteApiToken = (id: string) => {
                     <div class="flex justify-between pb-6">
                         <div>{{ t('project.token.list') }}</div>
                         <PrimaryButton
-                            v-if="hasProjectPermission('project.api-token.create')"
+                            v-if="hasProjectPermission('project.api-tokens.create')"
                             type="button"
                             @click="openCreateApiTokenModal"
                         >
@@ -148,7 +148,7 @@ const deleteApiToken = (id: string) => {
                                     :class="{ 'opacity-25': createApiTokenForm.processing }"
                                     :disabled="createApiTokenForm.processing"
                                     @click="createApiToken"
-                                    >Create
+                                >Create
                                 </PrimaryButton>
                             </div>
                         </div>
@@ -173,14 +173,15 @@ const deleteApiToken = (id: string) => {
                                         <time v-if="token.last_used_at" :datetime="token.last_used_at">
                                             {{
                                                 t('project.token.last_used_at', {
-                                                    time: diffForHumans(token.last_used_at),
+                                                    time: diffForHumans(token.last_used_at)
                                                 })
                                             }}
                                         </time>
                                         <span v-else>{{ t('project.token.never_used') }}</span>
                                     </p>
                                 </div>
-                                <Menu as="div" class="relative flex-none">
+                                <Menu as="div" class="relative flex-none"
+                                      v-if="hasAnyProjectPermission(['project.api-tokens.delete'])">
                                     <MenuButton class="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
                                         <span class="sr-only">Open options</span>
                                         <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
@@ -197,7 +198,7 @@ const deleteApiToken = (id: string) => {
                                             class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
                                         >
                                             <MenuItem
-                                                v-if="hasProjectPermission('project.api-token.delete')"
+                                                v-if="hasProjectPermission('project.api-tokens.delete')"
                                                 v-slot="{ active }"
                                             >
                                                 <button

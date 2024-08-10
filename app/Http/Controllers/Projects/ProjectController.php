@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Projects;
 use App\Enum\ApiAbility;
 use App\Http\Requests\Projects\CreateProjectRequest;
 use App\Http\Resource\ProjectResource;
+use App\Models\Project;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -20,10 +21,9 @@ class ProjectController
         return Redirect::route('project.overview', ['uuid' => $project->uuid])->with('success', 'Project created successfully');
     }
 
-    public function show(string $id)
+    public function show(Project $project)
     {
-        $project = auth()->user()->projects()->where('uuid', $id)->with(['members.pivot.role'])->firstOrFail();
-        $resource = new ProjectResource($project);
+        $resource = new ProjectResource($project->load(['members.pivot.role']));
         $resource::withoutWrapping();
 
         return Inertia::render(
@@ -34,12 +34,9 @@ class ProjectController
         );
     }
 
-    public function settings(string $id)
+    public function settings(Project $project)
     {
-        abort_unless(auth()->user()->hasProjectPermission($id, 'project.settings.view'), 403);
-
-        $project = auth()->user()->projects()->where('uuid', $id)->with(['members.pivot.role', 'tokens'])->firstOrFail();
-        $resource = new ProjectResource($project);
+        $resource = new ProjectResource($project->load(['members.pivot.role', 'tokens']));
         $resource::withoutWrapping();
 
         return Inertia::render(
@@ -51,12 +48,8 @@ class ProjectController
         );
     }
 
-    public function delete(Request $request, string $id)
+    public function delete(Request $request, Project $project)
     {
-        abort_unless(auth()->user()->hasProjectPermission($id, 'project.delete'), 403);
-
-        $project = auth()->user()->projects()->where('uuid', $id)->firstOrFail();
-
         $request->validate([
             'name' => 'required|in:'.$project->name,
         ]);

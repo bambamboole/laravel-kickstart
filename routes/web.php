@@ -33,15 +33,15 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/projects', [ProjectController::class, 'create'])->name('project.create');
-    Route::get('/projects/{uuid}', [ProjectController::class, 'show'])->name('project.overview');
-    Route::delete('/projects/{uuid}', [ProjectController::class, 'delete'])->name('project.delete');
-    Route::get('/projects/{uuid}/settings', [ProjectController::class, 'settings'])->name('project.settings');
-    Route::get('/projects/{uuid}/members', [ProjectMembersController::class, 'index'])->name('project.members.index');
-    Route::delete('/projects/{projectUuid}/members/{memberUuid}', [ProjectMembersController::class, 'delete'])->name('project.members.delete');
-    Route::post('/projects/{uuid}/invitations', [ProjectInvitationController::class, 'create'])->name('project.invitations.create');
-    Route::delete('/projects/{projectUuid}/invitations/{invitationUuid}', [ProjectInvitationController::class, 'delete'])->name('project.invitations.delete');
-    Route::post('/projects/{uuid}/api-tokens', [ProjectApiTokenController::class, 'create'])->name('project.api-tokens.create');
-    Route::delete('/projects/{projectUuid}/api-tokens/{tokenId}', [ProjectApiTokenController::class, 'delete'])->name('project.api-tokens.delete');
+    Route::get('/projects/{project:uuid}', [ProjectController::class, 'show'])->name('project.overview')->middleware('can:view,project');
+    Route::delete('/projects/{project:uuid}', [ProjectController::class, 'delete'])->name('project.delete')->middleware('can:delete,project');
+    Route::get('/projects/{project:uuid}/settings', [ProjectController::class, 'settings'])->name('project.settings');
+    Route::get('/projects/{project:uuid}/members', [ProjectMembersController::class, 'index'])->name('project.members.index')->middleware('can:viewMembers,project');
+    Route::delete('/projects/{project:uuid}/members/{uuid}', [ProjectMembersController::class, 'delete'])->name('project.members.delete')->middleware('can:deleteMembers,project');
+    Route::post('/projects/{project:uuid}/invitations', [ProjectInvitationController::class, 'create'])->name('project.invitations.create')->middleware('can:inviteMembers,project');
+    Route::delete('/projects/{project:uuid}/invitations/{uuid}', [ProjectInvitationController::class, 'delete'])->name('project.invitations.delete')->middleware('can:deleteInvitations,project');
+    Route::post('/projects/{project:uuid}/api-tokens', [ProjectApiTokenController::class, 'create'])->name('project.api-tokens.create')->middleware('can:createApiTokens,project');
+    Route::delete('/projects/{project:uuid}/api-tokens/{tokenId}', [ProjectApiTokenController::class, 'delete'])->name('project.api-tokens.delete')->middleware('can:deleteApiTokens,project');
 });
 Route::get('/accept-project-invitation/{uuid}', [ProjectInvitationController::class, 'accept'])->middleware(['signed'])->name('project.invitations.accept');
 
