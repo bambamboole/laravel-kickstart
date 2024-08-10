@@ -91,7 +91,7 @@ return [
         ],
         'created' => 'Token successfully created',
         'delete' => 'Delete',
-        'deleted' => 'x-project.token.deleted',
+        'deleted' => 'Token successfully deleted',
         'last_used_at' => 'Last used :time ago',
         'list' => 'Your Projects API tokens',
         'never_used' => 'Not yet used',
