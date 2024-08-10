@@ -8,11 +8,22 @@ class PermissionRegistry
 
     public function add(string $key): void
     {
-        $this->permissions[] = $key;
+        match (enum_exists($key)) {
+            true => $this->addEnum($key),
+            default => $this->permissions[] = $key,
+        };
     }
 
     public function all(): array
     {
         return $this->permissions;
+    }
+
+    private function addEnum(string $key): void
+    {
+        $this->permissions = array_merge(
+            $this->permissions,
+            array_map(fn (\BackedEnum $permission) => $permission->value, $key::cases()),
+        );
     }
 }
