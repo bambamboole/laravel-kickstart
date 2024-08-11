@@ -18,6 +18,11 @@ class ProjectPolicy
         return $user->hasProjectPermission($project, Permission::PROJECT_DELETE);
     }
 
+    public function viewSettings(User $user, Project $project): bool
+    {
+        return $user->hasProjectPermission($project, Permission::PROJECT_SETTINGS_VIEW);
+    }
+
     public function viewMembers(User $user, Project $project): bool
     {
         return $user->hasProjectPermission($project, Permission::PROJECT_MEMBERS_VIEW);

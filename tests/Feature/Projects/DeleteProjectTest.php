@@ -33,13 +33,5 @@ test('project name has to match', function () {
             'name' => 'test-foo',
         ]);
 
-    $response
-        ->assertSessionHasErrors(['name']);
-});
-
-test('fooooooo', function () {
-    $uuid = Str::orderedUuid();
-    $user = User::factory()->withProject(['uuid' => $uuid, 'name' => 'test-project'])->create();
-    $project = $user->projects()->first();
-    dump($project->pivot);
+    $response->assertSessionHasErrors(['name']);
 });

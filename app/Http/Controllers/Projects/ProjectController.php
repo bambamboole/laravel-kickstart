@@ -18,7 +18,7 @@ class ProjectController
         $role = Role::query()->where('name', 'owner')->firstOrFail();
         $project = $request->user()->projects()->create($request->validated(), ['role_id' => $role->id]);
 
-        return Redirect::route('project.overview', ['uuid' => $project->uuid])->with('success', 'Project created successfully');
+        return Redirect::route('project.overview', $project)->with('success', 'Project created successfully');
     }
 
     public function show(Project $project)

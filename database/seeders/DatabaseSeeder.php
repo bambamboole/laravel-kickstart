@@ -14,8 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::factory()->create(['name' => 'owner']);
-        $editorRole = Role::factory()->create(['name' => 'editor', 'permissions' => ['project.members.view']]);
+        $this->call(RoleSeeder::class);
 
         $user = User::factory()
             ->withProject(['name' => 'test-project'])
@@ -28,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $project = $user->projects()->first();
         $project->invitations()->create([
             'email' => 'foo@bar.com',
-            'role_id' => $editorRole->id,
+            'role_id' => Role::query()->where('name', 'editor')->firstOrFail()->id,
         ]);
         $token = $project->createToken('test-token');
         $this->command->info("Token: {$token->plainTextToken}");

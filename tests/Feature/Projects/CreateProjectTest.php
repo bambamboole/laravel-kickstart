@@ -1,10 +1,15 @@
 <?php declare(strict_types=1);
 
 use App\Models\User;
+use Database\Seeders\RoleSeeder;
+
+use function Pest\Laravel\seed;
 
 test('project can be created', function () {
+    seed(RoleSeeder::class);
     $user = User::factory()->create();
 
+    $this->withoutExceptionHandling();
     $response = $this
         ->actingAs($user)
         ->from('/')
