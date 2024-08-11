@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Enum\Permission;
+use App\Models\Project;
 use App\Services\Auth\PermissionRegistry;
 use App\Services\View\SidebarRegistry;
 use Illuminate\Auth\Events\Login;
@@ -35,5 +36,14 @@ class AppServiceProvider extends ServiceProvider
         $sidebarRegistry->addMainItem('Members', 'UsersIcon', 'project.members.index', fn (Request $request) => ['project' => $request->route('project')], Permission::PROJECT_MEMBERS_VIEW);
         $sidebarRegistry->addProfileItem('Profile', 'profile.edit');
         $sidebarRegistry->addProfileItem('Logout', 'logout');
+
+        Request::macro('project', function (): Project {
+            $project = $this->user();
+            if (! $project instanceof Project) {
+                abort(403);
+            }
+
+            return $project;
+        });
     }
 }
