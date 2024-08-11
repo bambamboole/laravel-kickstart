@@ -6,13 +6,12 @@ import { computed, ref } from 'vue';
 import TextInput from '@/Components/TextInput.vue';
 import Modal from '@/Components/Modal.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InputError from '@/Components/InputError.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { diffForHumans, hasProjectPermission } from '@/utils';
+import { diffForHumans, hasAnyProjectPermission, hasProjectPermission } from '@/utils';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid';
 import { formatDistanceToNow } from 'date-fns';
+import { Button } from '@/Components/ui/button';
 
 const { t } = useTranslation();
 const props = computed(
@@ -72,13 +71,13 @@ const removeMember = (uuid: string) => {
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
                     <div class="flex justify-between pb-6">
                         <p>{{ t('project.members.index.member_list') }}</p>
-                        <PrimaryButton
+                        <Button
                             v-if="hasProjectPermission('project.members.invite')"
                             type="button"
                             @click="openInviteMemberModal"
                         >
                             {{ t('project.members.index.inviteModal.button') }}
-                        </PrimaryButton>
+                        </Button>
                     </div>
 
                     <Modal :show="invitingMember" @close="closeInviteMemberModal" max-width="lg">
@@ -149,16 +148,16 @@ const removeMember = (uuid: string) => {
                             </div>
 
                             <div class="mt-6 flex justify-end">
-                                <SecondaryButton @click="closeInviteMemberModal">
+                                <Button variant="secondary" @click="closeInviteMemberModal">
                                     {{ t('project.members.index.inviteModal.cancel') }}
-                                </SecondaryButton>
-                                <PrimaryButton
+                                </Button>
+                                <Button
                                     class="ms-3"
                                     :class="{ 'opacity-25': inviteMemberForm.processing }"
                                     :disabled="inviteMemberForm.processing"
                                     @click="inviteMember"
                                     >Create
-                                </PrimaryButton>
+                                </Button>
                             </div>
                         </div>
                     </Modal>
@@ -195,7 +194,11 @@ const removeMember = (uuid: string) => {
                                         </time>
                                     </p>
                                 </div>
-                                <Menu as="div" class="relative flex-none">
+                                <Menu
+                                    as="div"
+                                    class="relative flex-none"
+                                    v-if="hasAnyProjectPermission(['project.members.delete'])"
+                                >
                                     <MenuButton class="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
                                         <span class="sr-only">Open options</span>
                                         <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
@@ -211,16 +214,6 @@ const removeMember = (uuid: string) => {
                                         <MenuItems
                                             class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
                                         >
-                                            <MenuItem v-slot="{ active }">
-                                                <a
-                                                    href="#"
-                                                    :class="[
-                                                        active ? 'bg-gray-50' : '',
-                                                        'block px-3 py-1 text-sm leading-6 text-gray-900',
-                                                    ]"
-                                                    >{{ t('project.member.change_role') }}</a
-                                                >
-                                            </MenuItem>
                                             <MenuItem
                                                 v-if="hasProjectPermission('project.members.delete')"
                                                 v-slot="{ active }"

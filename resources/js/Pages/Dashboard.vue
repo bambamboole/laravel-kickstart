@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import { useTranslation } from 'i18next-vue';
+import { Button } from '@/Components/ui/button';
 
+import { useTranslation } from 'i18next-vue';
 const { t } = useTranslation();
 import { useToast } from 'vue-toastification';
 import { ref } from 'vue';
 import Modal from '@/Components/Modal.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InputError from '@/Components/InputError.vue';
-import DangerButton from '@/Components/DangerButton.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const toast = useToast();
 window.Echo.channel(`orders.1`).listen('OrderShipmentStatusUpdated', (e) => {
@@ -60,7 +58,7 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
                     >
                         <div class="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
                             <Link
-                                :href="route('project.overview', { uuid: project.uuid })"
+                                :href="route('project.overview', { project: project.uuid })"
                                 class="text-sm font-medium leading-6 text-gray-900"
                                 >{{ project.name }}
                             </Link>
@@ -105,16 +103,16 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
                         </div>
 
                         <div class="mt-6 flex justify-end">
-                            <SecondaryButton @click="closeCreateProjectModal">
+                            <Button variant="secondary" @click="closeCreateProjectModal">
                                 {{ t('dashboard.createProjectModal.cancel') }}
-                            </SecondaryButton>
-                            <PrimaryButton
+                            </Button>
+                            <Button
                                 class="ms-3"
                                 :class="{ 'opacity-25': projectForm.processing }"
                                 :disabled="projectForm.processing"
                                 @click="createProject"
                                 >Create
-                            </PrimaryButton>
+                            </Button>
                         </div>
                     </div>
                 </Modal>

@@ -40,5 +40,14 @@
         "vue-toastification": "^2.0.0-rc.5",
         "vue-tsc": "^2.0.22",
         "ziggy-js": "^2.2.1"
+    },
+    "dependencies": {
+        "@vueuse/core": "^10.11.1",
+        "class-variance-authority": "^0.7.0",
+        "clsx": "^2.1.1",
+        "lucide-vue-next": "^0.427.0",
+        "radix-vue": "^1.9.3",
+        "tailwind-merge": "^2.5.0",
+        "tailwindcss-animate": "^1.0.7"
     }
 }

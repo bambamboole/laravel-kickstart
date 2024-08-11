@@ -2,9 +2,9 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { Button } from '@/Components/ui/button';
 
 const props = usePage<{
     email: string;
@@ -84,9 +84,9 @@ const submit = () => {
                     Already registered?
                 </Link>
 
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <Button class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
-                </PrimaryButton>
+                </Button>
             </div>
         </form>
     </GuestLayout>
