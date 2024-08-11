@@ -19,6 +19,7 @@
         "laravel/reverb": "^1.0.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "spatie/laravel-query-builder": "^6.0",
         "tightenco/ziggy": "^2.21"
     },
     "require-dev": {
@@ -29,7 +30,8 @@
         "nunomaduro/collision": "^8.3",
         "pestphp/pest": "^2.23",
         "pestphp/pest-plugin-laravel": "^2.4",
-        "pestphp/pest-plugin-type-coverage": "^2.8"
+        "pestphp/pest-plugin-type-coverage": "^2.8",
+        "zircote/swagger-php": "^4.10"
     },
     "autoload": {
         "psr-4": {
