@@ -6,9 +6,9 @@ use App\Http\Resource\ProjectResource;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
-class ProjectInfoApiController
+class InfoApiController
 {
-    #[OA\Get(path: '/api/v1/info')]
+    #[OA\Get(path: '/api/v1/info', security: [['BearerAuth' => ['info']]])]
     #[OA\Response(
         response: '200',
         description: 'This endpoint returns information about the project, members and pending invitations.',

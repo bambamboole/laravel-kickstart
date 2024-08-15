@@ -2,7 +2,6 @@
 
 use App\Models\Project;
 
-
 test('project info is returned', function () {
     /** @var Project $project */
     $project = Project::factory()->withMembers()->create();

@@ -24,10 +24,10 @@ class ProjectFactory extends Factory
         ];
     }
 
-    public function withMembers(): static
+    public function withMembers(int $count = 3): static
     {
         return $this->hasAttached(
-            User::factory()->count(3),
+            User::factory()->count($count),
             ['role_id' => Role::query()->firstOrCreate(['name' => 'owner'], ['permissions' => app(PermissionRegistry::class)->all()])->id],
             'members',
         );
