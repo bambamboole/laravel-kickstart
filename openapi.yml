@@ -1,0 +1,115 @@
+openapi: 3.1.0
+info:
+  title: 'My API'
+  description: 'Developer API'
+  contact:
+    name: 'API Support'
+    url: 'http://laravel-kickstart.test'
+    email: hello@example.com
+  version: 1.0.0
+servers:
+  -
+    url: 'http://laravel-kickstart.test'
+    description: 'Your API environment'
+paths:
+  /api/v1/info:
+    get:
+      operationId: 'GET::api.v1.info'
+      responses:
+        '200':
+          description: 'This endpoint returns information about the project, members and pending invitations.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data: { $ref: '#/components/schemas/Project' }
+                type: object
+                additionalProperties: false
+        '403':
+          description: 'Not authorized'
+components:
+  schemas:
+    Invitation:
+      properties:
+        uuid:
+          type: string
+        email:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
+        created_at:
+          type: string
+          format: date-time
+      type: object
+      additionalProperties: false
+    Member:
+      properties:
+        uuid:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        last_login_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        role:
+          $ref: '#/components/schemas/Role'
+      type: object
+      additionalProperties: false
+    Project:
+      required:
+        - uuid
+        - name
+      properties:
+        uuid:
+          type: string
+        name:
+          type: string
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+        tokens:
+          type: array
+          items:
+            $ref: '#/components/schemas/Token'
+        invitations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Token'
+      type: object
+      additionalProperties: false
+    Role:
+      properties:
+        uuid:
+          type: string
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+            example: project.delete
+      type: object
+      additionalProperties: false
+    Token:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        abilities:
+          type: array
+          items:
+            type: string
+            example: info
+        last_used_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+      type: object
+      additionalProperties: false
