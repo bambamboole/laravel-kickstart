@@ -19,10 +19,31 @@ use OpenApi\Attributes as OA;
     type: 'object',
     additionalProperties: false,
 )]
+
 #[OA\OpenApi(
     security: [['BearerAuth' => []]]
 )]
 #[OA\Components(
+    parameters: [
+        new OA\Parameter(
+            parameter: 'Page',
+            name: 'page',
+            description: 'Page number.',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'integer'),
+            example: 1,
+        ),
+        new OA\Parameter(
+            parameter: 'PerPage',
+            name: 'per_page',
+            description: 'Page size.',
+            in: 'query',
+            required: false,
+            schema: new OA\Schema(type: 'integer'),
+            example: 30,
+        ),
+    ],
     securitySchemes: [
         new OA\SecurityScheme(
             securityScheme: 'BearerAuth',

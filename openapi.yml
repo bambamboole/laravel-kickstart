@@ -54,6 +54,10 @@ paths:
                 type: string
                 example: john@example.com
             type: object
+        -
+          $ref: '#/components/parameters/Page'
+        -
+          $ref: '#/components/parameters/PerPage'
       responses:
         '200':
           description: 'Paginated list of members'
@@ -174,6 +178,23 @@ components:
           format: date-time
       type: object
       additionalProperties: false
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: 'Page number.'
+      required: false
+      schema:
+        type: integer
+      example: 1
+    PerPage:
+      name: per_page
+      in: query
+      description: 'Page size.'
+      required: false
+      schema:
+        type: integer
+      example: 30
   securitySchemes:
     BearerAuth:
       type: http

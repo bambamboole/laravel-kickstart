@@ -29,6 +29,8 @@ class MembersApiController
         ),
         style: 'deepObject',
     )]
+    #[OA\Parameter(ref: '#/components/parameters/Page')]
+    #[OA\Parameter(ref: '#/components/parameters/PerPage')]
     #[OA\Response(
         response: '200',
         description: 'Paginated list of members',
@@ -47,7 +49,7 @@ class MembersApiController
     {
         $members = QueryBuilder::for($request->project()->members())
             ->allowedFilters(['uuid', 'name', 'email'])
-            ->paginate();
+            ->paginate(min($request->integer('per_page', 15), 100));
 
         return MemberResource::collection($members);
     }
