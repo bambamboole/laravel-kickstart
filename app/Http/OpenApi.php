@@ -24,6 +24,16 @@ use OpenApi\Attributes as OA;
     security: [['BearerAuth' => []]]
 )]
 #[OA\Components(
+    responses: [
+        new OA\Response(
+            response: '401',
+            description: 'Unauthorized',
+        ),
+        new OA\Response(
+            response: '403',
+            description: 'Unauthorized',
+        ),
+    ],
     parameters: [
         new OA\Parameter(
             parameter: 'Page',
