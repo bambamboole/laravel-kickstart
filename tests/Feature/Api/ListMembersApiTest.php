@@ -7,7 +7,7 @@ test('project members are returned', function () {
     /** @var Project $project */
     $project = Project::factory()->withMembers(20)->create();
     $token = $project->createToken('test');
-    $response = $this->getJson('/api/v1/members', ['Authorization' => 'Bearer '.$token->plainTextToken]);
+    $response = $this->get('/api/v1/members', ['Authorization' => 'Bearer '.$token->plainTextToken]);
 
     expect($response->json('data'))->toHaveCount(15)
         ->and($response->json('meta.last_page'))->toBe(2)
@@ -23,7 +23,7 @@ test('project members can be filtered', function ($attribute, $value) {
     });
     $token = $project->createToken('test');
     $url = '/api/v1/members?'.http_build_query(['filter' => [$attribute => $value]]);
-    $response = $this->getJson($url, ['Authorization' => 'Bearer '.$token->plainTextToken]);
+    $response = $this->get($url, ['Authorization' => 'Bearer '.$token->plainTextToken]);
 
     expect($response->json('data'))->toHaveCount(1)
         ->and($response->json('data.0.'.$attribute))->toBe($value)
@@ -39,7 +39,7 @@ test('project members needs token ability', function () {
     /** @var Project $project */
     $project = Project::factory()->create();
     $token = $project->createToken('test', []);
-    $response = $this->getJson('/api/v1/members', ['Authorization' => 'Bearer '.$token->plainTextToken]);
+    $response = $this->get('/api/v1/members', ['Authorization' => 'Bearer '.$token->plainTextToken]);
 
     $response->assertStatus(403);
 });
