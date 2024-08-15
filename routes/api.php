@@ -7,4 +7,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/v1/info', InfoApiController::class)->middleware(['auth:sanctum', 'ability:'.ApiAbility::INFO->value]);
 Route::get('/v1/members', [MembersApiController::class, 'index'])->middleware(['auth:sanctum', 'ability:'.ApiAbility::MEMBERS_LIST->value]);
+Route::post('/v1/members', [MembersApiController::class, 'create'])->middleware(['auth:sanctum', 'ability:'.ApiAbility::MEMBERS_INVITE->value]);
 Route::delete('/v1/members/{uuid}', [MembersApiController::class, 'delete'])->middleware(['auth:sanctum', 'ability:'.ApiAbility::MEMBERS_REMOVE->value]);

@@ -33,6 +33,23 @@ use OpenApi\Attributes as OA;
             response: '403',
             description: 'Unauthorized',
         ),
+        new OA\Response(
+            response: '422',
+            description: 'Failed validation',
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property('message', type: 'string',
+                        example: 'The email is required (and 1 more error)',
+                    ),
+                    new OA\Property('errors', type: 'object',
+                        example: [
+                            'email' => ['The email is required'],
+                            'role_uuid' => ['The role is required'],
+                        ],
+                    ),
+                ],
+            )
+        ),
     ],
     parameters: [
         new OA\Parameter(

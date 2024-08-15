@@ -81,7 +81,7 @@ return [
     'in_array' => 'The :attribute field must exist in :other.',
     'integer' => 'The :attribute field must be an integer.',
     'invitation' => [
-        'exists' => 'x-validation.invitation.exists',
+        'exists' => 'An invitation for this email address already exists.',
     ],
     'ip' => 'The :attribute field must be a valid IP address.',
     'ipv4' => 'The :attribute field must be a valid IPv4 address.',
@@ -171,6 +171,9 @@ return [
     'url' => 'The :attribute field must be a valid URL.',
     'uuid' => 'The :attribute field must be a valid UUID.',
     'values' => [
+        'current_password' => [
+            'wrong-password' => 'x-validation.values.current_password.wrong-password',
+        ],
         'email' => [
             'dqdq@' => 'x-validation.values.email.dqdq@',
             'fwefw' => 'x-validation.values.email.fwefw',
@@ -181,6 +184,9 @@ return [
             'test-foo' => 'x-validation.values.name.test-foo',
             'test-project' => 'x-validation.values.name.test-project',
             'test3' => 'x-validation.values.name.test3',
+        ],
+        'password' => [
+            'wrong-password' => 'x-validation.values.password.wrong-password',
         ],
     ],
 ];

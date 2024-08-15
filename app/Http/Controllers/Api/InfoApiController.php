@@ -13,6 +13,7 @@ class InfoApiController
         response: '200',
         description: 'This endpoint returns information about the project, members and pending invitations.',
         content: new OA\JsonContent(
+            // @TODO: Should this also be wrapped in a data object or not ?
             properties: [new OA\Property('data', ref: '#/components/schemas/Project')],
             additionalProperties: false,
         )

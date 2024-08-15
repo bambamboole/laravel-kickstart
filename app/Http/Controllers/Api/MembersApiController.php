@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\InviteProjectMember;
+use App\Http\Requests\Projects\InviteProjectMemberRequest;
 use App\Http\Resource\MemberResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -71,15 +73,7 @@ class MembersApiController
         response: '200',
         description: 'No content',
     )]
-    #[OA\Response(
-        response: '422',
-        description: 'Failed validation',
-        content: new OA\JsonContent(
-            properties: [
-                new OA\Property('message', type: 'string', example: 'Cannot remove owner from the project'),
-            ],
-        )
-    )]
+    #[OA\Response(ref: '#/components/responses/422', response: '422')]
     #[OA\Response(ref: '#/components/responses/401', response: '401')]
     #[OA\Response(ref: '#/components/responses/403', response: '403')]
     public function delete(Request $request, string $uuid): Response|JsonResponse
@@ -92,5 +86,33 @@ class MembersApiController
         $request->project()->members()->detach($member);
 
         return response()->noContent(200);
+    }
+
+    #[OA\Post(
+        path: '/api/v1/members',
+        description: 'Invite a new member to the project.',
+        security: [['BearerAuth' => ['members.invite']]],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                properties: [
+                    new OA\Property('email', type: 'string', example: 'john@example.com'),
+                    new OA\Property('role_uuid', type: 'string', example: '2e4567-e89b-12d3-a456-426614174000'),
+                ]
+            )
+        ),
+    )]
+    #[OA\Response(
+        response: '201',
+        description: 'No content',
+    )]
+    #[OA\Response(ref: '#/components/responses/422', response: '422')]
+    #[OA\Response(ref: '#/components/responses/401', response: '401')]
+    #[OA\Response(ref: '#/components/responses/403', response: '403')]
+    public function create(InviteProjectMemberRequest $request, InviteProjectMember $action): Response|JsonResponse
+    {
+        $action->execute($request->project(), $request->email, $request->role_uuid);
+
+        return response()->noContent(201);
     }
 }

@@ -76,6 +76,35 @@ paths:
         -
           BearerAuth:
             - members.list
+    post:
+      description: 'Invite a new member to the project.'
+      operationId: 'POST::api.v1.members'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                  example: john@example.com
+                role_uuid:
+                  type: string
+                  example: 2e4567-e89b-12d3-a456-426614174000
+              type: object
+      responses:
+        '201':
+          description: 'No content'
+        '422':
+          $ref: '#/components/responses/422'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+      security:
+        -
+          BearerAuth:
+            - members.invite
   '/api/v1/members/{uuid}':
     delete:
       description: 'Remove member from project.'
@@ -93,13 +122,7 @@ paths:
         '200':
           description: 'No content'
         '422':
-          description: 'Failed validation'
-          content:
-            application/json:
-              schema:
-                properties:
-                  message: { type: string, example: 'Cannot remove owner from the project' }
-                type: object
+          $ref: '#/components/responses/422'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -221,6 +244,21 @@ components:
       description: Unauthorized
     '403':
       description: Unauthorized
+    '422':
+      description: 'Failed validation'
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                example: 'The email is required (and 1 more error)'
+              errors:
+                type: object
+                example:
+                  email: ['The email is required']
+                  role_uuid: ['The role is required']
+            type: object
   parameters:
     Page:
       name: page
