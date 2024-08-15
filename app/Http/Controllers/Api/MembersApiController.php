@@ -21,6 +21,7 @@ class MembersApiController
         required: false,
         schema: new OA\Schema(
             properties: [
+                new OA\Property('uuid', type: 'string', example: '123e4567-e89b-12d3-a456-426614174000'),
                 new OA\Property('name', type: 'string', example: 'John Doe'),
                 new OA\Property('email', type: 'string', example: 'john@example.com'),
             ],
@@ -45,7 +46,7 @@ class MembersApiController
     public function index(Request $request): JsonResource
     {
         $members = QueryBuilder::for($request->project()->members())
-            ->allowedFilters(['name', 'email'])
+            ->allowedFilters(['uuid', 'name', 'email'])
             ->paginate();
 
         return MemberResource::collection($members);

@@ -30,6 +30,7 @@ test('project members can be filtered', function ($attribute, $value) {
         ->and($response->json('meta.last_page'))->toBe(1)
         ->and($response->json('meta.per_page'))->toBe(15);
 })->with([
+    ['uuid', '123e4567-e89b-12d3-a456-426614174000'],
     ['email', 'john@example.com'],
     ['name', 'John Doe'],
 ]);
