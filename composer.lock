@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a7432028545e567ea91d218de06b5cc",
+    "content-hash": "baa9337932063e0b99a4915fbb561053",
     "packages": [
         {
             "name": "ajcastro/eager-load-pivot-relations",
@@ -2013,16 +2013,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.5.1",
+            "version": "2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "ac815920de0eff6de947eac0a6a94e5ed0fb147c"
+                "reference": "df09d5b6a4188f8f3c3ab2e43a109076a5eeb767"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/ac815920de0eff6de947eac0a6a94e5ed0fb147c",
-                "reference": "ac815920de0eff6de947eac0a6a94e5ed0fb147c",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/df09d5b6a4188f8f3c3ab2e43a109076a5eeb767",
+                "reference": "df09d5b6a4188f8f3c3ab2e43a109076a5eeb767",
                 "shasum": ""
             },
             "require": {
@@ -2115,7 +2115,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-24T12:52:09+00:00"
+            "time": "2024-08-14T10:56:57+00:00"
         },
         {
             "name": "league/config",
@@ -6903,12 +6903,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tighten/ziggy.git",
-                "reference": "3e68510c7667297d6b652458d0de90acafc8082c"
+                "reference": "a8a5984adfc1b9c987fe0a6b6e7db4555ab2cf16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tighten/ziggy/zipball/3e68510c7667297d6b652458d0de90acafc8082c",
-                "reference": "3e68510c7667297d6b652458d0de90acafc8082c",
+                "url": "https://api.github.com/repos/tighten/ziggy/zipball/a8a5984adfc1b9c987fe0a6b6e7db4555ab2cf16",
+                "reference": "a8a5984adfc1b9c987fe0a6b6e7db4555ab2cf16",
                 "shasum": ""
             },
             "require": {
@@ -6966,7 +6966,7 @@
                 "issues": "https://github.com/tighten/ziggy/issues",
                 "source": "https://github.com/tighten/ziggy/tree/2.x"
             },
-            "time": "2024-08-03T21:12:33+00:00"
+            "time": "2024-08-13T16:45:34+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -7239,6 +7239,66 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "bambamboole/laravel-openapi",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bambamboole/laravel-openapi.git",
+                "reference": "ea8c3d3c906b22695ba2a59f7043c6a5decebb61"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bambamboole/laravel-openapi/zipball/ea8c3d3c906b22695ba2a59f7043c6a5decebb61",
+                "reference": "ea8c3d3c906b22695ba2a59f7043c6a5decebb61",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^8.0|^9.0|^10.0|^11.0",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
+                "kirschbaum-development/laravel-openapi-validator": "^1.0",
+                "php": "^8.1",
+                "zircote/swagger-php": "^4.10"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.8",
+                "phpunit/phpunit": "^10.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Bambamboole\\LaravelOpenApi\\OpenApiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bambamboole\\LaravelOpenApi\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Manuel Christlieb",
+                    "email": "manuel@christlieb.eu"
+                }
+            ],
+            "description": "A laravel package which provides a smooth OAS workflow",
+            "homepage": "https://github.com/bambamboole/laravel-openapi",
+            "keywords": [
+                "bambamboole",
+                "laravel-openapi"
+            ],
+            "support": {
+                "issues": "https://github.com/bambamboole/laravel-openapi/issues",
+                "source": "https://github.com/bambamboole/laravel-openapi/tree/0.1.0"
+            },
+            "time": "2024-08-15T14:49:44+00:00"
+        },
         {
             "name": "barryvdh/laravel-debugbar",
             "version": "v3.13.5",
@@ -10386,16 +10446,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "5.0.1",
+            "version": "5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "2db5010a484d53ebf536087a70b4a5423c102372"
+                "reference": "2d3e04c3b4c1e84a5e7382221ad8883c8fbc4f53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/2db5010a484d53ebf536087a70b4a5423c102372",
-                "reference": "2db5010a484d53ebf536087a70b4a5423c102372",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/2d3e04c3b4c1e84a5e7382221ad8883c8fbc4f53",
+                "reference": "2d3e04c3b4c1e84a5e7382221ad8883c8fbc4f53",
                 "shasum": ""
             },
             "require": {
@@ -10406,7 +10466,7 @@
                 "sebastian/exporter": "^5.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^10.3"
+                "phpunit/phpunit": "^10.4"
             },
             "type": "library",
             "extra": {
@@ -10451,7 +10511,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "security": "https://github.com/sebastianbergmann/comparator/security/policy",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/5.0.1"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/5.0.2"
             },
             "funding": [
                 {
@@ -10459,7 +10519,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-08-14T13:18:12+00:00"
+            "time": "2024-08-12T06:03:08+00:00"
         },
         {
             "name": "sebastian/complexity",
