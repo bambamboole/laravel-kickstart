@@ -4,12 +4,12 @@ info:
   description: 'Developer API'
   contact:
     name: 'API Support'
-    url: 'http://laravel-kickstart.test'
+    url: 'https://laravel-kickstart.test'
     email: hello@example.com
   version: 1.0.0
 servers:
   -
-    url: 'http://laravel-kickstart.test'
+    url: 'https://laravel-kickstart.test'
     description: 'Your API environment'
 paths:
   /api/v1/info:
@@ -27,8 +27,66 @@ paths:
                 additionalProperties: false
         '403':
           description: 'Not authorized'
+      security:
+        -
+          BearerAuth:
+            - info
+  /api/v1/members:
+    get:
+      description: 'Get all members of the project.'
+      operationId: 'GET::api.v1.members'
+      parameters:
+        -
+          name: filter
+          in: query
+          description: 'Filter members by name or email.'
+          required: false
+          style: deepObject
+          schema:
+            properties:
+              name:
+                type: string
+                example: 'John Doe'
+              email:
+                type: string
+                example: john@example.com
+            type: object
+      responses:
+        '200':
+          description: 'Paginated list of members'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Member' } }
+                  meta: { $ref: '#/components/schemas/Pagination' }
+                type: object
+        '403':
+          description: 'Not authorized'
 components:
   schemas:
+    Pagination:
+      properties:
+        current_page:
+          type: integer
+        from:
+          type: integer
+        path:
+          type: string
+        per_page:
+          type: integer
+        last_page:
+          type: integer
+        to:
+          type: integer
+        total:
+          type: integer
+        links:
+          type: array
+          items:
+            type: object
+      type: object
+      additionalProperties: false
     Invitation:
       properties:
         uuid:
@@ -113,3 +171,11 @@ components:
           format: date-time
       type: object
       additionalProperties: false
+  securitySchemes:
+    BearerAuth:
+      type: http
+      in: header
+      scheme: bearer
+security:
+  -
+    BearerAuth: []
