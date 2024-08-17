@@ -11,11 +11,10 @@ import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InputError from '@/Components/InputError.vue';
-import DangerButton from '@/Components/DangerButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const toast = useToast();
-window.Echo.channel(`orders.1`).listen('OrderShipmentStatusUpdated', (e) => {
+window.Echo.channel(`orders.1`).listen('OrderShipmentStatusUpdated', (e: any) => {
     toast(`Order ${e.order.id} has been shipped!`);
 });
 const projectForm = useForm({
@@ -60,7 +59,7 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
                     >
                         <div class="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
                             <Link
-                                :href="route('project.overview', { uuid: project.uuid })"
+                                :href="route('project.overview', { project: project.uuid })"
                                 class="text-sm font-medium leading-6 text-gray-900"
                                 >{{ project.name }}
                             </Link>

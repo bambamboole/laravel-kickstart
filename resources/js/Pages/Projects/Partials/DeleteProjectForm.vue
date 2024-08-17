@@ -24,7 +24,7 @@ const confirmProjectDeletion = () => {
 };
 
 const deleteProject = () => {
-    form.delete(route('project.delete', { uuid: page.props.project.uuid }), {
+    form.delete(route('project.delete', { project: page.props.project.uuid }), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => projectNameInput.value?.focus(),

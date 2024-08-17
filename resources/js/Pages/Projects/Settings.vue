@@ -19,11 +19,11 @@ const props = computed(
     () =>
         usePage<{
             project: { tokens: Array<{ id: string; int: string; abilities: Array<string> }> };
-        }>().props
+        }>().props,
 );
 const createApiTokenForm = useForm({
     name: '',
-    abilities: []
+    abilities: [],
 });
 const creatingApiToken = ref(false);
 const openCreateApiTokenModal = () => {
@@ -38,14 +38,14 @@ const createApiToken = () => {
         preserveScroll: true,
         onSuccess: () => {
             closeCreateApiTokenModal();
-        }
+        },
     });
 };
 
 const deleteApiToken = (id: string) => {
     const form = useForm({});
     form.delete(route('project.api-tokens.delete', { project: props.value.project.uuid, tokenId: id }), {
-        preserveScroll: true
+        preserveScroll: true,
     });
 };
 </script>
@@ -148,7 +148,7 @@ const deleteApiToken = (id: string) => {
                                     :class="{ 'opacity-25': createApiTokenForm.processing }"
                                     :disabled="createApiTokenForm.processing"
                                     @click="createApiToken"
-                                >Create
+                                    >Create
                                 </PrimaryButton>
                             </div>
                         </div>
@@ -173,15 +173,18 @@ const deleteApiToken = (id: string) => {
                                         <time v-if="token.last_used_at" :datetime="token.last_used_at">
                                             {{
                                                 t('project.token.last_used_at', {
-                                                    time: diffForHumans(token.last_used_at)
+                                                    time: diffForHumans(token.last_used_at),
                                                 })
                                             }}
                                         </time>
                                         <span v-else>{{ t('project.token.never_used') }}</span>
                                     </p>
                                 </div>
-                                <Menu as="div" class="relative flex-none"
-                                      v-if="hasAnyProjectPermission(['project.api-tokens.delete'])">
+                                <Menu
+                                    as="div"
+                                    class="relative flex-none"
+                                    v-if="hasAnyProjectPermission(['project.api-tokens.delete'])"
+                                >
                                     <MenuButton class="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
                                         <span class="sr-only">Open options</span>
                                         <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />

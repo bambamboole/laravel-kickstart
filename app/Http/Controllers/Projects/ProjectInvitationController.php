@@ -2,41 +2,18 @@
 
 namespace App\Http\Controllers\Projects;
 
+use App\Actions\InviteProjectMember;
 use App\Http\Requests\Projects\InviteProjectMemberRequest;
-use App\Mail\ProjectInvitationMail;
 use App\Models\Project;
 use App\Models\ProjectInvitation;
-use App\Models\Role;
 use App\Models\User;
-use Illuminate\Database\UniqueConstraintViolationException;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class ProjectInvitationController
 {
-    public function create(InviteProjectMemberRequest $request, Project $project)
+    public function create(InviteProjectMemberRequest $request, Project $project, InviteProjectMember $action)
     {
-        $role = Role::query()->where('uuid', $request->role_uuid)->firstOrFail();
-
-        try {
-            $invitation = $project->invitations()->create(
-                [
-                    'email' => $request->email,
-                    'role_id' => $role->id,
-                ]
-            );
-        } catch (UniqueConstraintViolationException) {
-            throw ValidationException::withMessages(['email' => __('validation.invitation.exists', ['email' => $request->email])]);
-        }
-
-        Mail::to($request->email)->send(
-            new ProjectInvitationMail(
-                $invitation,
-                URL::signedRoute('project.invitations.accept', ['uuid' => $invitation->uuid]),
-            )
-        );
+        $action->execute($project, $request->email, $request->role_uuid);
 
         return redirect()->route('project.members.index', $project)->with('success', 'Invitation sent!');
     }

@@ -5,6 +5,7 @@ namespace App\Enum;
 enum ApiAbility: string
 {
     case INFO = 'info';
+    case MEMBERS_LIST = 'members.list';
     case MEMBERS_INVITE = 'members.invite';
     case MEMBERS_REMOVE = 'members.remove';
     case INVITATIONS_DELETE = 'invitations.delete';
