@@ -3,7 +3,7 @@
 
 ## Laravel Kickstart
 This project is in an early stage development and is changing rapidly currently.  
-This repository contains an initial setup for a Laravel project with an opinionated workflow to kickstart your next Laravel project.
+This repository contains an initial setup for a Laravel project with an opinionated (but fairly sophisticated) workflow to kickstart your next Laravel project.
 
 If you are also thinking, that the existing start kits are not fitting your needs, then this might be the right place for you.  
 I am looking for support and feedback to make this project better and more useful for everyone.
@@ -26,6 +26,9 @@ I am looking for support and feedback to make this project better and more usefu
 Every executed translation in PHP and Javascript will be dumped automatically in the translation files.
 - Full Vue test setup with coverage support 
 - Code lint setup via PHP-CS-Fixer and Prettier for PHP, Blade, Javascript and Tailwind class sorting
+- OpenAPI spec generation via Attributes for better colocation
+- API feature tests have automatic OpenAPI spec validation
+- Automatic OpenAPI spec docs via Swagger UI on `/api-reference`
 
 ## Installation
 1. Clone the repository
@@ -38,11 +41,9 @@ Every executed translation in PHP and Javascript will be dumped automatically in
 
 ## Todos
 Feel free to contribute to this project. Here are some ideas for the next steps:
-- Make API abilities dynamic
-- Add API endpoints for managing invitations and members
+- Add API endpoint for deleting invitations
 - Replace all hard coded strings with translations
 - Add more tests
-- Add OpenAPI specs workflow
 - Make readme more detailed
 - Add two factor authentication (multiple devices per user)
 - Add CI/CD setup for PHP and Javascript
@@ -52,7 +53,6 @@ Feel free to contribute to this project. Here are some ideas for the next steps:
 
 ## Ideas
 These are some ideas which are not yet planned but could be interesting for the future. If you are interested in one of these, feel free to hit me up to discuss, for sure also with other ideas.
-- Make the whole starter kit an installable package which can publish all the needed files and setup the project
 - yubikey support for two factor authentication
 - Add Storybook.js for frontend components
 - ??? Your idea ???
