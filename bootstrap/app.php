@@ -22,7 +22,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(append: [
             \App\Http\Middleware\RequestDefaultAcceptJson::class,
         ]);
-        $middleware->statefulApi();
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
