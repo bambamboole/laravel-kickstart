@@ -28,7 +28,7 @@ Every executed translation in PHP and Javascript will be dumped automatically in
 - Code lint setup via PHP-CS-Fixer and Prettier for PHP, Blade, Javascript and Tailwind class sorting
 - OpenAPI spec generation via Attributes for better colocation
 - API feature tests have automatic OpenAPI spec validation
-- Automatic OpenAPI spec docs via Swagger UI on `/api-reference`
+- Automatic OpenAPI spec docs via Swagger UI on `/api`
 
 ## Installation
 1. Clone the repository

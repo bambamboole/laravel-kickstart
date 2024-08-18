@@ -18,6 +18,7 @@ class MembersApiController
         path: '/api/v1/members',
         description: 'Get all members of the project.',
         security: [['BearerAuth' => ['members.list']]],
+        tags: ['Members'],
     )]
     #[OA\Parameter(
         name: 'filter',
@@ -61,6 +62,7 @@ class MembersApiController
         path: '/api/v1/members/{uuid}',
         description: 'Remove member from project.',
         security: [['BearerAuth' => ['members.remove']]],
+        tags: ['Members'],
     )]
     #[OA\Parameter(
         name: 'uuid',
@@ -101,6 +103,7 @@ class MembersApiController
                 ]
             )
         ),
+        tags: ['Members'],
     )]
     #[OA\Response(
         response: '201',

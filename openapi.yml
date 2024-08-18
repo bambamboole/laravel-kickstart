@@ -1,19 +1,21 @@
 openapi: 3.1.0
 info:
-  title: 'My API'
+  title: 'My Fancy API'
   description: 'Developer API'
   contact:
     name: 'API Support'
     url: 'https://laravel-kickstart.test'
     email: hello@example.com
-  version: 1.0.0
+  version: 1.2.3
 servers:
   -
     url: 'https://laravel-kickstart.test'
-    description: 'Your API environment'
+    description: 'My API environment'
 paths:
   /api/v1/info:
     get:
+      tags:
+        - Info
       operationId: 'GET::api.v1.info'
       responses:
         '200':
@@ -33,6 +35,8 @@ paths:
             - info
   /api/v1/members:
     get:
+      tags:
+        - Members
       description: 'Get all members of the project.'
       operationId: 'GET::api.v1.members'
       parameters:
@@ -77,6 +81,8 @@ paths:
           BearerAuth:
             - members.list
     post:
+      tags:
+        - Members
       description: 'Invite a new member to the project.'
       operationId: 'POST::api.v1.members'
       requestBody:
@@ -107,6 +113,8 @@ paths:
             - members.invite
   '/api/v1/members/{uuid}':
     delete:
+      tags:
+        - Members
       description: 'Remove member from project.'
       operationId: 'DELETE::api.v1.members.{uuid}'
       parameters:
@@ -284,3 +292,10 @@ components:
 security:
   -
     BearerAuth: []
+tags:
+  -
+    name: Info
+    description: Info
+  -
+    name: Members
+    description: Members

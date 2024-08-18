@@ -10,10 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/api-reference', function () {
-    return view('api-reference', ['spec' => \Symfony\Component\Yaml\Yaml::parse(file_get_contents(config('openapi.output')))]);
-});
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

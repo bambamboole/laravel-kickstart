@@ -8,7 +8,7 @@ use OpenApi\Attributes as OA;
 
 class InfoApiController
 {
-    #[OA\Get(path: '/api/v1/info', security: [['BearerAuth' => ['info']]])]
+    #[OA\Get(path: '/api/v1/info', security: [['BearerAuth' => ['info']]], tags: ['Info'])]
     #[OA\Response(
         response: '200',
         description: 'This endpoint returns information about the project, members and pending invitations.',
