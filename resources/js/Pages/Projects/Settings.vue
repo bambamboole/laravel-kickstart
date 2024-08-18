@@ -15,7 +15,7 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger
+    DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 import Content from '@/Components/ui/content/Content.vue';
 
@@ -23,11 +23,11 @@ const props = computed(
     () =>
         usePage<{
             project: { tokens: Array<{ id: string; int: string; abilities: Array<string> }> };
-        }>().props
+        }>().props,
 );
 const createApiTokenForm = useForm({
     name: '',
-    abilities: []
+    abilities: [],
 });
 const creatingApiToken = ref(false);
 
@@ -37,14 +37,14 @@ const createApiToken = () => {
         onSuccess: () => {
             creatingApiToken.value = false;
             createApiTokenForm.reset();
-        }
+        },
     });
 };
 
 const deleteApiToken = (id: string) => {
     const form = useForm({});
     form.delete(route('project.api-tokens.delete', { project: props.value.project.uuid, tokenId: id }), {
-        preserveScroll: true
+        preserveScroll: true,
     });
 };
 </script>
@@ -73,7 +73,7 @@ const deleteApiToken = (id: string) => {
                                 </Button>
                             </DialogTrigger>
                             <DialogContent>
-                                <div class="p-6 relative">
+                                <div class="relative p-6">
                                     <h2 class="text-lg font-medium text-gray-900">
                                         {{ $t('project.settings.createApiTokenModal.title') }}
                                     </h2>
@@ -95,8 +95,8 @@ const deleteApiToken = (id: string) => {
                                             type="text"
                                             class="mt-1 block w-3/4"
                                             :placeholder="
-                                                    $t('project.settings.createApiTokenModal.form.name.placeholder')
-                                                "
+                                                $t('project.settings.createApiTokenModal.form.name.placeholder')
+                                            "
                                         />
 
                                         <InputError :message="createApiTokenForm.errors.name" class="mt-2" />
@@ -152,7 +152,7 @@ const deleteApiToken = (id: string) => {
                                             :class="{ 'opacity-25': createApiTokenForm.processing }"
                                             :disabled="createApiTokenForm.processing"
                                             @click="createApiToken"
-                                        >Create
+                                            >Create
                                         </Button>
                                     </div>
                                 </div>
@@ -182,7 +182,7 @@ const deleteApiToken = (id: string) => {
                                             <time v-if="token.last_used_at" :datetime="token.last_used_at">
                                                 {{
                                                     $t('project.token.last_used_at', {
-                                                        time: diffForHumans(token.last_used_at)
+                                                        time: diffForHumans(token.last_used_at),
                                                     })
                                                 }}
                                             </time>
@@ -211,6 +211,5 @@ const deleteApiToken = (id: string) => {
 
             <DeleteProjectForm v-if="hasProjectPermission('project.delete')" />
         </Content>
-
     </ProjectLayout>
 </template>

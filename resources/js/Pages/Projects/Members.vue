@@ -15,7 +15,7 @@ import {
     DialogContent,
     DialogDescription,
     DialogTitle,
-    DialogTrigger
+    DialogTrigger,
 } from '@/Components/ui/dialog';
 import Content from '@/Components/ui/content/Content.vue';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
@@ -23,7 +23,7 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger
+    DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 
 const props = computed(
@@ -31,11 +31,11 @@ const props = computed(
         usePage<{
             project: { members: Array<{ email: string; name: string }> };
             roles: Array<{ uuid: string; name: string; permissions: Array<string> }>;
-        }>().props
+        }>().props,
 );
 const inviteMemberForm = useForm({
     email: '',
-    role_uuid: ''
+    role_uuid: '',
 });
 
 const invitingMember = ref(false);
@@ -46,21 +46,21 @@ const inviteMember = () => {
         onSuccess: () => {
             invitingMember.value = false;
             inviteMemberForm.reset();
-        }
+        },
     });
 };
 
 const deleteInvitation = (uuid: string) => {
     const form = useForm({});
     form.delete(route('project.invitations.delete', { project: props.value.project.uuid, uuid: uuid }), {
-        preserveScroll: true
+        preserveScroll: true,
     });
 };
 
 const removeMember = (uuid: string) => {
     const form = useForm({});
     form.delete(route('project.members.delete', { project: props.value.project.uuid, uuid: uuid }), {
-        preserveScroll: true
+        preserveScroll: true,
     });
 };
 </script>
@@ -84,7 +84,7 @@ const removeMember = (uuid: string) => {
                                 </Button>
                             </DialogTrigger>
                             <DialogContent>
-                                <div class="p-6 w-full">
+                                <div class="w-full p-6">
                                     <h2 class="text-lg font-medium text-gray-900">
                                         {{ $t('project.members.inviteModal.title') }}
                                     </h2>
@@ -105,7 +105,9 @@ const removeMember = (uuid: string) => {
                                             v-model="inviteMemberForm.email"
                                             type="text"
                                             class="mt-1 block w-3/4"
-                                            :placeholder="$t('project.members.index.inviteModal.form.email.placeholder')"
+                                            :placeholder="
+                                                $t('project.members.index.inviteModal.form.email.placeholder')
+                                            "
                                         />
 
                                         <InputError :message="inviteMemberForm.errors.email" class="mt-2" />
@@ -138,8 +140,8 @@ const removeMember = (uuid: string) => {
                                                     </div>
                                                     <div class="ml-3 text-sm leading-6">
                                                         <label :for="role.uuid" class="font-medium text-gray-900">{{
-                                                                role.name
-                                                            }}</label>
+                                                            role.name
+                                                        }}</label>
                                                         <p :id="`${role.uuid}-description`" class="text-gray-500">
                                                             {{ role.permissions.join(', ') }}
                                                         </p>
@@ -161,7 +163,7 @@ const removeMember = (uuid: string) => {
                                             :class="{ 'opacity-25': inviteMemberForm.processing }"
                                             :disabled="inviteMemberForm.processing"
                                             @click="inviteMember"
-                                        >Create
+                                            >Create
                                         </Button>
                                     </div>
                                 </div>
@@ -183,8 +185,8 @@ const removeMember = (uuid: string) => {
                                     </p>
                                     <p class="mt-1 flex text-xs leading-5 text-gray-500">
                                         <a :href="`mailto:${member.email}`" class="truncate hover:underline">{{
-                                                member.email
-                                            }}</a>
+                                            member.email
+                                        }}</a>
                                     </p>
                                 </div>
                             </div>
@@ -195,7 +197,7 @@ const removeMember = (uuid: string) => {
                                         <time :datetime="member.last_login_at">
                                             {{
                                                 $t('project.member.last_login', {
-                                                    time: diffForHumans(member.last_login_at)
+                                                    time: diffForHumans(member.last_login_at),
                                                 })
                                             }}
                                         </time>
@@ -244,7 +246,7 @@ const removeMember = (uuid: string) => {
                                         <time :datetime="invitation.created_at">
                                             {{
                                                 $t('project.invitation.created', {
-                                                    time: formatDistanceToNow(invitation.created_at)
+                                                    time: formatDistanceToNow(invitation.created_at),
                                                 })
                                             }}
                                         </time>
