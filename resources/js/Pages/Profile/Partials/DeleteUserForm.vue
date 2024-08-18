@@ -10,17 +10,17 @@ import {
     Dialog,
     DialogClose,
     DialogContent,
-    DialogDescription,
+    DialogDescription, DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
+    DialogTrigger
 } from '@/Components/ui/dialog';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref<HTMLInputElement | null>(null);
 
 const form = useForm({
-    password: '',
+    password: ''
 });
 
 const deleteUser = () => {
@@ -33,7 +33,7 @@ const deleteUser = () => {
         onError: () => passwordInput.value?.focus(),
         onFinish: () => {
             form.reset();
-        },
+        }
     });
 };
 </script>
@@ -78,7 +78,7 @@ const deleteUser = () => {
                         <InputError :message="form.errors.password" class="mt-2" />
                     </div>
 
-                    <div class="mt-6 flex justify-end">
+                    <DialogFooter>
                         <DialogClose as-child>
                             <Button variant="secondary">{{ $t('cancel') }}</Button>
                         </DialogClose>
@@ -92,7 +92,7 @@ const deleteUser = () => {
                         >
                             {{ $t('profile.delete_account.button') }}
                         </Button>
-                    </div>
+                    </DialogFooter>
                 </DialogContent>
             </Dialog>
         </CardContent>

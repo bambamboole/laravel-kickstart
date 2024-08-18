@@ -10,12 +10,12 @@ import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/Components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/Components/ui/dialog';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger,
+    DropdownMenuTrigger
 } from '@/Components/ui/dropdown-menu';
 import Content from '@/Components/ui/content/Content.vue';
 
@@ -23,11 +23,11 @@ const props = computed(
     () =>
         usePage<{
             project: { tokens: Array<{ id: string; int: string; abilities: Array<string> }> };
-        }>().props,
+        }>().props
 );
 const createApiTokenForm = useForm({
     name: '',
-    abilities: [],
+    abilities: []
 });
 const creatingApiToken = ref(false);
 
@@ -37,14 +37,14 @@ const createApiToken = () => {
         onSuccess: () => {
             creatingApiToken.value = false;
             createApiTokenForm.reset();
-        },
+        }
     });
 };
 
 const deleteApiToken = (id: string) => {
     const form = useForm({});
     form.delete(route('project.api-tokens.delete', { project: props.value.project.uuid, tokenId: id }), {
-        preserveScroll: true,
+        preserveScroll: true
     });
 };
 </script>
@@ -73,89 +73,86 @@ const deleteApiToken = (id: string) => {
                                 </Button>
                             </DialogTrigger>
                             <DialogContent>
-                                <div class="relative p-6">
-                                    <h2 class="text-lg font-medium text-gray-900">
+                                <DialogHeader>
+                                    <DialogTitle>
                                         {{ $t('project.settings.createApiTokenModal.title') }}
-                                    </h2>
-
-                                    <p class="mt-1 text-sm text-gray-600">
+                                    </DialogTitle>
+                                    <DialogDescription>
                                         {{ $t('project.settings.createApiTokenModal.description') }}
-                                    </p>
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <div class="mt-6">
+                                    <InputLabel
+                                        for="name"
+                                        :value="$t('project.settings.createApiTokenModal.form.name.label')"
+                                        class="sr-only"
+                                    />
 
-                                    <div class="mt-6">
-                                        <InputLabel
-                                            for="name"
-                                            :value="$t('project.settings.createApiTokenModal.form.name.label')"
-                                            class="sr-only"
-                                        />
-
-                                        <TextInput
-                                            id="name"
-                                            v-model="createApiTokenForm.name"
-                                            type="text"
-                                            class="mt-1 block w-3/4"
-                                            :placeholder="
+                                    <TextInput
+                                        id="name"
+                                        v-model="createApiTokenForm.name"
+                                        type="text"
+                                        class="mt-1 block w-3/4"
+                                        :placeholder="
                                                 $t('project.settings.createApiTokenModal.form.name.placeholder')
                                             "
-                                        />
+                                    />
 
-                                        <InputError :message="createApiTokenForm.errors.name" class="mt-2" />
-                                    </div>
+                                    <InputError :message="createApiTokenForm.errors.name" class="mt-2" />
+                                </div>
 
-                                    <div class="mt-6">
-                                        <InputLabel
-                                            for="ability"
-                                            class="pb-6"
-                                            :value="$t('project.settings.createApiTokenModal.form.abilities.label')"
-                                        />
+                                <div class="mt-6">
+                                    <InputLabel
+                                        for="ability"
+                                        class="pb-6"
+                                        :value="$t('project.settings.createApiTokenModal.form.abilities.label')"
+                                    />
 
-                                        <fieldset aria-label="Ability">
-                                            <div class="space-y-5">
-                                                <div
-                                                    v-for="ability in props.abilities"
-                                                    :key="ability"
-                                                    class="relative flex items-start"
-                                                >
-                                                    <div class="flex h-6 items-center">
-                                                        <input
-                                                            :id="ability"
-                                                            :aria-describedby="`${ability}-description`"
-                                                            name="ability"
-                                                            type="checkbox"
-                                                            :value="ability"
-                                                            v-model="createApiTokenForm.abilities"
-                                                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                                        />
-                                                    </div>
-                                                    <div class="ml-3 text-sm leading-6">
-                                                        <label :for="ability" class="font-medium text-gray-900">
-                                                            {{
-                                                                $t(`project.token.ability.${ability}.description`) +
-                                                                ` (${ability})`
-                                                            }}
-                                                        </label>
-                                                    </div>
+                                    <fieldset aria-label="Ability">
+                                        <div class="space-y-5">
+                                            <div
+                                                v-for="ability in props.abilities"
+                                                :key="ability"
+                                                class="relative flex items-start"
+                                            >
+                                                <div class="flex h-6 items-center">
+                                                    <input
+                                                        :id="ability"
+                                                        :aria-describedby="`${ability}-description`"
+                                                        name="ability"
+                                                        type="checkbox"
+                                                        :value="ability"
+                                                        v-model="createApiTokenForm.abilities"
+                                                        class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                                    />
+                                                </div>
+                                                <div class="ml-3 text-sm leading-6">
+                                                    <label :for="ability" class="font-medium text-gray-900">
+                                                        {{
+                                                            $t(`project.token.ability.${ability}.description`) +
+                                                            ` (${ability})`
+                                                        }}
+                                                    </label>
                                                 </div>
                                             </div>
-                                        </fieldset>
-                                        <InputError :message="createApiTokenForm.errors.abilities" class="mt-2" />
-                                    </div>
-
-                                    <div class="mt-6 flex justify-end">
-                                        <DialogClose as-child>
-                                            <Button variant="secondary">
-                                                {{ $t('project.settings.createApiTokenModal.cancel') }}
-                                            </Button>
-                                        </DialogClose>
+                                        </div>
+                                    </fieldset>
+                                    <InputError :message="createApiTokenForm.errors.abilities" class="mt-2" />
+                                </div>
+                                <DialogFooter>
+                                    <DialogClose as-child>
+                                        <Button variant="secondary">
+                                            {{ $t('project.settings.createApiTokenModal.cancel') }}
+                                        </Button>
                                         <Button
                                             class="ms-3"
                                             :class="{ 'opacity-25': createApiTokenForm.processing }"
                                             :disabled="createApiTokenForm.processing"
                                             @click="createApiToken"
-                                            >Create
+                                        >Create
                                         </Button>
-                                    </div>
-                                </div>
+                                    </DialogClose>
+                                </DialogFooter>
                             </DialogContent>
                         </Dialog>
                     </div>
@@ -182,7 +179,7 @@ const deleteApiToken = (id: string) => {
                                             <time v-if="token.last_used_at" :datetime="token.last_used_at">
                                                 {{
                                                     $t('project.token.last_used_at', {
-                                                        time: diffForHumans(token.last_used_at),
+                                                        time: diffForHumans(token.last_used_at)
                                                     })
                                                 }}
                                             </time>

@@ -13,9 +13,9 @@ import {
     Dialog,
     DialogClose,
     DialogContent,
-    DialogDescription,
+    DialogDescription, DialogFooter, DialogHeader,
     DialogTitle,
-    DialogTrigger,
+    DialogTrigger
 } from '@/Components/ui/dialog';
 import Content from '@/Components/ui/content/Content.vue';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
@@ -23,7 +23,7 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger,
+    DropdownMenuTrigger
 } from '@/Components/ui/dropdown-menu';
 
 const props = computed(
@@ -31,11 +31,11 @@ const props = computed(
         usePage<{
             project: { members: Array<{ email: string; name: string }> };
             roles: Array<{ uuid: string; name: string; permissions: Array<string> }>;
-        }>().props,
+        }>().props
 );
 const inviteMemberForm = useForm({
     email: '',
-    role_uuid: '',
+    role_uuid: ''
 });
 
 const invitingMember = ref(false);
@@ -46,21 +46,21 @@ const inviteMember = () => {
         onSuccess: () => {
             invitingMember.value = false;
             inviteMemberForm.reset();
-        },
+        }
     });
 };
 
 const deleteInvitation = (uuid: string) => {
     const form = useForm({});
     form.delete(route('project.invitations.delete', { project: props.value.project.uuid, uuid: uuid }), {
-        preserveScroll: true,
+        preserveScroll: true
     });
 };
 
 const removeMember = (uuid: string) => {
     const form = useForm({});
     form.delete(route('project.members.delete', { project: props.value.project.uuid, uuid: uuid }), {
-        preserveScroll: true,
+        preserveScroll: true
     });
 };
 </script>
@@ -84,89 +84,86 @@ const removeMember = (uuid: string) => {
                                 </Button>
                             </DialogTrigger>
                             <DialogContent>
-                                <div class="w-full p-6">
-                                    <h2 class="text-lg font-medium text-gray-900">
-                                        {{ $t('project.members.inviteModal.title') }}
-                                    </h2>
-
-                                    <p class="mt-1 text-sm text-gray-600">
+                                <DialogHeader>
+                                    <DialogTitle>{{ $t('project.members.inviteModal.title') }}</DialogTitle>
+                                    <DialogDescription>
                                         {{ $t('project.members.inviteModal.description') }}
-                                    </p>
+                                    </DialogDescription>
+                                </DialogHeader>
 
-                                    <div class="mt-6">
-                                        <InputLabel
-                                            for="email"
-                                            :value="$t('project.members.index.inviteModal.form.email.label')"
-                                            class="sr-only"
-                                        />
+                                <div class="mt-6">
+                                    <InputLabel
+                                        for="email"
+                                        :value="$t('project.members.index.inviteModal.form.email.label')"
+                                        class="sr-only"
+                                    />
 
-                                        <TextInput
-                                            id="email"
-                                            v-model="inviteMemberForm.email"
-                                            type="text"
-                                            class="mt-1 block w-3/4"
-                                            :placeholder="
+                                    <TextInput
+                                        id="email"
+                                        v-model="inviteMemberForm.email"
+                                        type="text"
+                                        class="mt-1 block w-3/4"
+                                        :placeholder="
                                                 $t('project.members.index.inviteModal.form.email.placeholder')
                                             "
-                                        />
+                                    />
 
-                                        <InputError :message="inviteMemberForm.errors.email" class="mt-2" />
-                                    </div>
+                                    <InputError :message="inviteMemberForm.errors.email" class="mt-2" />
+                                </div>
 
-                                    <div class="mt-6">
-                                        <InputLabel
-                                            for="role"
-                                            class="pb-6"
-                                            :value="$t('project.members.index.inviteModal.form.role.label')"
-                                        />
+                                <div class="mt-6">
+                                    <InputLabel
+                                        for="role"
+                                        class="pb-6"
+                                        :value="$t('project.members.index.inviteModal.form.role.label')"
+                                    />
 
-                                        <fieldset aria-label="Role">
-                                            <div class="space-y-5">
-                                                <div
-                                                    v-for="role in props.roles"
-                                                    :key="role.uuid"
-                                                    class="relative flex items-start"
-                                                >
-                                                    <div class="flex h-6 items-center">
-                                                        <input
-                                                            :id="role.uuid"
-                                                            :aria-describedby="`${role.uuid}-description`"
-                                                            name="role"
-                                                            type="radio"
-                                                            :value="role.uuid"
-                                                            v-model="inviteMemberForm.role_uuid"
-                                                            class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                                        />
-                                                    </div>
-                                                    <div class="ml-3 text-sm leading-6">
-                                                        <label :for="role.uuid" class="font-medium text-gray-900">{{
+                                    <fieldset aria-label="Role">
+                                        <div class="space-y-5">
+                                            <div
+                                                v-for="role in props.roles"
+                                                :key="role.uuid"
+                                                class="relative flex items-start"
+                                            >
+                                                <div class="flex h-6 items-center">
+                                                    <input
+                                                        :id="role.uuid"
+                                                        :aria-describedby="`${role.uuid}-description`"
+                                                        name="role"
+                                                        type="radio"
+                                                        :value="role.uuid"
+                                                        v-model="inviteMemberForm.role_uuid"
+                                                        class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                                    />
+                                                </div>
+                                                <div class="ml-3 text-sm leading-6">
+                                                    <label :for="role.uuid" class="font-medium text-gray-900">{{
                                                             role.name
                                                         }}</label>
-                                                        <p :id="`${role.uuid}-description`" class="text-gray-500">
-                                                            {{ role.permissions.join(', ') }}
-                                                        </p>
-                                                    </div>
+                                                    <p :id="`${role.uuid}-description`" class="text-gray-500">
+                                                        {{ role.permissions.join(', ') }}
+                                                    </p>
                                                 </div>
                                             </div>
-                                        </fieldset>
-                                        <InputError :message="inviteMemberForm.errors.role_uuid" class="mt-2" />
-                                    </div>
-
-                                    <div class="mt-6 flex justify-end">
-                                        <DialogClose as-child>
-                                            <Button variant="secondary">
-                                                {{ $t('project.members.index.inviteModal.cancel') }}
-                                            </Button>
-                                        </DialogClose>
-                                        <Button
-                                            class="ms-3"
-                                            :class="{ 'opacity-25': inviteMemberForm.processing }"
-                                            :disabled="inviteMemberForm.processing"
-                                            @click="inviteMember"
-                                            >Create
-                                        </Button>
-                                    </div>
+                                        </div>
+                                    </fieldset>
+                                    <InputError :message="inviteMemberForm.errors.role_uuid" class="mt-2" />
                                 </div>
+
+                                <DialogFooter>
+                                    <DialogClose as-child>
+                                        <Button variant="secondary">
+                                            {{ $t('project.members.index.inviteModal.cancel') }}
+                                        </Button>
+                                    </DialogClose>
+                                    <Button
+                                        class="ms-3"
+                                        :class="{ 'opacity-25': inviteMemberForm.processing }"
+                                        :disabled="inviteMemberForm.processing"
+                                        @click="inviteMember"
+                                    >Create
+                                    </Button>
+                                </DialogFooter>
                             </DialogContent>
                         </Dialog>
                     </div>
@@ -185,8 +182,8 @@ const removeMember = (uuid: string) => {
                                     </p>
                                     <p class="mt-1 flex text-xs leading-5 text-gray-500">
                                         <a :href="`mailto:${member.email}`" class="truncate hover:underline">{{
-                                            member.email
-                                        }}</a>
+                                                member.email
+                                            }}</a>
                                     </p>
                                 </div>
                             </div>
@@ -197,7 +194,7 @@ const removeMember = (uuid: string) => {
                                         <time :datetime="member.last_login_at">
                                             {{
                                                 $t('project.member.last_login', {
-                                                    time: diffForHumans(member.last_login_at),
+                                                    time: diffForHumans(member.last_login_at)
                                                 })
                                             }}
                                         </time>
@@ -246,7 +243,7 @@ const removeMember = (uuid: string) => {
                                         <time :datetime="invitation.created_at">
                                             {{
                                                 $t('project.invitation.created', {
-                                                    time: formatDistanceToNow(invitation.created_at),
+                                                    time: formatDistanceToNow(invitation.created_at)
                                                 })
                                             }}
                                         </time>
