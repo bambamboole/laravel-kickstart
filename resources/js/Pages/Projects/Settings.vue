@@ -4,7 +4,6 @@ import ProjectLayout from '@/Layouts/ProjectLayout.vue';
 import DeleteProjectForm from '@/Pages/Projects/Partials/DeleteProjectForm.vue';
 import { diffForHumans, hasAnyProjectPermission, hasProjectPermission } from '@/utils';
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid';
-import { useTranslation } from 'i18next-vue';
 import { computed, ref } from 'vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -16,10 +15,9 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger
+    DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 
-const { t } = useTranslation();
 const props = computed(
     () =>
         usePage<{
@@ -51,11 +49,11 @@ const deleteApiToken = (id: string) => {
 </script>
 
 <template>
-    <Head :title="t('project.settings.title')" />
+    <Head :title="$t('project.settings.title')" />
 
     <ProjectLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">{{ t('project.settings.header') }}</h2>
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">{{ $t('project.settings.header') }}</h2>
         </template>
 
         <div class="py-12">
@@ -63,31 +61,32 @@ const deleteApiToken = (id: string) => {
                 <Card>
                     <CardHeader>
                         <div class="flex justify-between pb-6">
-
                             <CardTitle>
-                                {{ t('project.token.list') }}
+                                {{ $t('project.token.list') }}
                             </CardTitle>
-                            <Dialog v-if="hasProjectPermission('project.api-tokens.create')"
-                                    v-model:open="creatingApiToken">
+                            <Dialog
+                                v-if="hasProjectPermission('project.api-tokens.create')"
+                                v-model:open="creatingApiToken"
+                            >
                                 <DialogTrigger as-child>
                                     <Button type="button">
-                                        {{ t('project.settings.createApiTokenModal.button') }}
+                                        {{ $t('project.settings.createApiTokenModal.button') }}
                                     </Button>
                                 </DialogTrigger>
                                 <DialogContent>
                                     <div class="p-6">
                                         <h2 class="text-lg font-medium text-gray-900">
-                                            {{ t('project.settings.createApiTokenModal.title') }}
+                                            {{ $t('project.settings.createApiTokenModal.title') }}
                                         </h2>
 
                                         <p class="mt-1 text-sm text-gray-600">
-                                            {{ t('project.settings.createApiTokenModal.description') }}
+                                            {{ $t('project.settings.createApiTokenModal.description') }}
                                         </p>
 
                                         <div class="mt-6">
                                             <InputLabel
                                                 for="name"
-                                                :value="t('project.settings.createApiTokenModal.form.name.label')"
+                                                :value="$t('project.settings.createApiTokenModal.form.name.label')"
                                                 class="sr-only"
                                             />
 
@@ -96,7 +95,9 @@ const deleteApiToken = (id: string) => {
                                                 v-model="createApiTokenForm.name"
                                                 type="text"
                                                 class="mt-1 block w-3/4"
-                                                :placeholder="t('project.settings.createApiTokenModal.form.name.placeholder')"
+                                                :placeholder="
+                                                    $t('project.settings.createApiTokenModal.form.name.placeholder')
+                                                "
                                             />
 
                                             <InputError :message="createApiTokenForm.errors.name" class="mt-2" />
@@ -106,7 +107,7 @@ const deleteApiToken = (id: string) => {
                                             <InputLabel
                                                 for="role"
                                                 class="pb-6"
-                                                :value="t('project.settings.createApiTokenModal.form.abilities.label')"
+                                                :value="$t('project.settings.createApiTokenModal.form.abilities.label')"
                                             />
 
                                             <fieldset aria-label="Role">
@@ -130,7 +131,7 @@ const deleteApiToken = (id: string) => {
                                                         <div class="ml-3 text-sm leading-6">
                                                             <label :for="ability" class="font-medium text-gray-900">
                                                                 {{
-                                                                    t(`project.token.ability.${ability}.description`) +
+                                                                    $t(`project.token.ability.${ability}.description`) +
                                                                     ` (${ability})`
                                                                 }}
                                                             </label>
@@ -144,7 +145,7 @@ const deleteApiToken = (id: string) => {
                                         <div class="mt-6 flex justify-end">
                                             <DialogClose as-child>
                                                 <Button variant="secondary">
-                                                    {{ t('project.settings.createApiTokenModal.cancel') }}
+                                                    {{ $t('project.settings.createApiTokenModal.cancel') }}
                                                 </Button>
                                             </DialogClose>
                                             <Button
@@ -152,7 +153,7 @@ const deleteApiToken = (id: string) => {
                                                 :class="{ 'opacity-25': createApiTokenForm.processing }"
                                                 :disabled="createApiTokenForm.processing"
                                                 @click="createApiToken"
-                                            >Create
+                                                >Create
                                             </Button>
                                         </div>
                                     </div>
@@ -181,12 +182,12 @@ const deleteApiToken = (id: string) => {
                                             <p class="mt-1 text-xs leading-5 text-gray-500">
                                                 <time v-if="token.last_used_at" :datetime="token.last_used_at">
                                                     {{
-                                                        t('project.token.last_used_at', {
+                                                        $t('project.token.last_used_at', {
                                                             time: diffForHumans(token.last_used_at),
                                                         })
                                                     }}
                                                 </time>
-                                                <span v-else>{{ t('project.token.never_used') }}</span>
+                                                <span v-else>{{ $t('project.token.never_used') }}</span>
                                             </p>
                                         </div>
                                         <DropdownMenu v-if="hasAnyProjectPermission(['project.api-tokens.delete'])">
@@ -197,7 +198,7 @@ const deleteApiToken = (id: string) => {
                                             <DropdownMenuContent>
                                                 <DropdownMenuItem>
                                                     <Button variant="link" @click="deleteApiToken(token.id)">
-                                                        {{ t('project.token.delete') }}
+                                                        {{ $t('project.token.delete') }}
                                                     </Button>
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>

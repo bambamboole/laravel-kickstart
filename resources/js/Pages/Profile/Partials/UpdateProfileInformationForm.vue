@@ -4,8 +4,6 @@ import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
-import { useTranslation } from 'i18next-vue';
-const { t } = useTranslation();
 defineProps<{
     mustVerifyEmail?: Boolean;
     status?: String;
@@ -78,7 +76,7 @@ const form = useForm({
             </div>
 
             <div class="flex items-center gap-4">
-                <Button :disabled="form.processing">{{ t('save') }}</Button>
+                <Button :disabled="form.processing">{{ $t('save') }}</Button>
 
                 <Transition
                     enter-active-class="transition ease-in-out"

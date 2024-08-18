@@ -5,9 +5,7 @@ import Modal from '@/Components/Modal.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import { nextTick, ref } from 'vue';
-import { useTranslation } from 'i18next-vue';
 import { Button } from '@/Components/ui/button';
-const { t } = useTranslation();
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref<HTMLInputElement | null>(null);
 
@@ -50,7 +48,7 @@ const closeModal = () => {
             </p>
         </header>
 
-        <Button variant="destructive" @click="confirmUserDeletion">{{ t('account.delete') }}</Button>
+        <Button variant="destructive" @click="confirmUserDeletion">{{ $t('account.delete') }}</Button>
 
         <Modal :show="confirmingUserDeletion" @close="closeModal">
             <div class="p-6">
@@ -78,7 +76,7 @@ const closeModal = () => {
                 </div>
 
                 <div class="mt-6 flex justify-end">
-                    <Button variant="secondary" @click="closeModal">{{ t('cancel') }}</Button>
+                    <Button variant="secondary" @click="closeModal">{{ $t('cancel') }}</Button>
 
                     <Button
                         variant="destructive"
@@ -87,7 +85,7 @@ const closeModal = () => {
                         :disabled="form.processing"
                         @click="deleteUser"
                     >
-                        {{ t('account.delete') }}
+                        {{ $t('account.delete') }}
                     </Button>
                 </div>
             </div>

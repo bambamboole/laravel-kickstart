@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import ProjectLayout from '@/Layouts/ProjectLayout.vue';
-import { useTranslation } from 'i18next-vue';
 import { computed, ref } from 'vue';
 import TextInput from '@/Components/TextInput.vue';
 import Modal from '@/Components/Modal.vue';
@@ -13,7 +12,6 @@ import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid';
 import { formatDistanceToNow } from 'date-fns';
 import { Button } from '@/Components/ui/button';
 
-const { t } = useTranslation();
 const props = computed(
     () =>
         usePage<{
@@ -59,41 +57,41 @@ const removeMember = (uuid: string) => {
 </script>
 
 <template>
-    <Head :title="t('project.members.index.title')" />
+    <Head :title="$t('project.members.index.title')" />
 
     <ProjectLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">{{ t('project.members.index.header') }}</h2>
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">{{ $t('project.members.index.header') }}</h2>
         </template>
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
                     <div class="flex justify-between pb-6">
-                        <p>{{ t('project.members.index.member_list') }}</p>
+                        <p>{{ $t('project.members.index.member_list') }}</p>
                         <Button
                             v-if="hasProjectPermission('project.members.invite')"
                             type="button"
                             @click="openInviteMemberModal"
                         >
-                            {{ t('project.members.index.inviteModal.button') }}
+                            {{ $t('project.members.index.inviteModal.button') }}
                         </Button>
                     </div>
 
                     <Modal :show="invitingMember" @close="closeInviteMemberModal" max-width="lg">
                         <div class="p-6">
                             <h2 class="text-lg font-medium text-gray-900">
-                                {{ t('project.members.index.inviteModal.title') }}
+                                {{ $t('project.members.index.inviteModal.title') }}
                             </h2>
 
                             <p class="mt-1 text-sm text-gray-600">
-                                {{ t('project.members.index.inviteModal.description') }}
+                                {{ $t('project.members.index.inviteModal.description') }}
                             </p>
 
                             <div class="mt-6">
                                 <InputLabel
                                     for="email"
-                                    :value="t('project.members.index.inviteModal.form.email.label')"
+                                    :value="$t('project.members.index.inviteModal.form.email.label')"
                                     class="sr-only"
                                 />
 
@@ -102,7 +100,7 @@ const removeMember = (uuid: string) => {
                                     v-model="inviteMemberForm.email"
                                     type="text"
                                     class="mt-1 block w-3/4"
-                                    :placeholder="t('project.members.index.inviteModal.form.email.placeholder')"
+                                    :placeholder="$t('project.members.index.inviteModal.form.email.placeholder')"
                                 />
 
                                 <InputError :message="inviteMemberForm.errors.email" class="mt-2" />
@@ -112,7 +110,7 @@ const removeMember = (uuid: string) => {
                                 <InputLabel
                                     for="role"
                                     class="pb-6"
-                                    :value="t('project.members.index.inviteModal.form.role.label')"
+                                    :value="$t('project.members.index.inviteModal.form.role.label')"
                                 />
 
                                 <fieldset aria-label="Role">
@@ -149,7 +147,7 @@ const removeMember = (uuid: string) => {
 
                             <div class="mt-6 flex justify-end">
                                 <Button variant="secondary" @click="closeInviteMemberModal">
-                                    {{ t('project.members.index.inviteModal.cancel') }}
+                                    {{ $t('project.members.index.inviteModal.cancel') }}
                                 </Button>
                                 <Button
                                     class="ms-3"
@@ -187,7 +185,7 @@ const removeMember = (uuid: string) => {
                                     <p class="mt-1 text-xs leading-5 text-gray-500">
                                         <time :datetime="member.last_login_at">
                                             {{
-                                                t('project.member.last_login', {
+                                                $t('project.member.last_login', {
                                                     time: diffForHumans(member.last_login_at),
                                                 })
                                             }}
@@ -226,7 +224,7 @@ const removeMember = (uuid: string) => {
                                                         'block px-3 py-1 text-sm leading-6 text-gray-900',
                                                     ]"
                                                 >
-                                                    {{ t('project.member.remove') }}
+                                                    {{ $t('project.member.remove') }}
                                                 </button>
                                             </MenuItem>
                                         </MenuItems>
@@ -237,7 +235,7 @@ const removeMember = (uuid: string) => {
                     </ul>
                 </div>
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                    <div class="py-6">{{ t('project.members.index.invitation_list') }}</div>
+                    <div class="py-6">{{ $t('project.members.index.invitation_list') }}</div>
                     <ul role="list" class="divide-y divide-gray-100">
                         <li
                             v-for="invitation in props.project.invitations"
@@ -257,7 +255,7 @@ const removeMember = (uuid: string) => {
                                     <p v-if="invitation.created_at" class="mt-1 text-xs leading-5 text-gray-500">
                                         <time :datetime="invitation.created_at">
                                             {{
-                                                t('project.invitation.created', {
+                                                $t('project.invitation.created', {
                                                     time: formatDistanceToNow(invitation.created_at),
                                                 })
                                             }}
@@ -291,7 +289,7 @@ const removeMember = (uuid: string) => {
                                                         'block px-3 py-1 text-sm leading-6 text-gray-900',
                                                     ]"
                                                 >
-                                                    {{ t('project.invitation.delete') }}
+                                                    {{ $t('project.invitation.delete') }}
                                                 </button>
                                             </MenuItem>
                                         </MenuItems>

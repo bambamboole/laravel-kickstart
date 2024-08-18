@@ -5,8 +5,6 @@ import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { Button } from '@/Components/ui/button';
-import { useTranslation } from 'i18next-vue';
-const { t } = useTranslation();
 const passwordInput = ref<HTMLInputElement | null>(null);
 const currentPasswordInput = ref<HTMLInputElement | null>(null);
 
@@ -92,7 +90,7 @@ const updatePassword = () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <Button :disabled="form.processing">{{ t('save') }}</Button>
+                <Button :disabled="form.processing">{{ $t('save') }}</Button>
 
                 <Transition
                     enter-active-class="transition ease-in-out"

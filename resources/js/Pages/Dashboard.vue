@@ -2,9 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { Button } from '@/Components/ui/button';
-
-import { useTranslation } from 'i18next-vue';
-const { t } = useTranslation();
 import { useToast } from 'vue-toastification';
 import { ref } from 'vue';
 import Modal from '@/Components/Modal.vue';
@@ -45,7 +42,7 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-xl leading-tight text-gray-800" v-html="t('dashboard.title')"></h2>
+            <h2 class="text-xl leading-tight text-gray-800" v-html="$t('dashboard.title')"></h2>
         </template>
 
         <div class="py-12">
@@ -78,16 +75,18 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
                 </ul>
                 <Modal :show="creatingNewProject" @close="closeCreateProjectModal">
                     <div class="p-6">
-                        <h2 class="text-lg font-medium text-gray-900">{{ t('dashboard.createProjectModal.title') }}</h2>
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ $t('dashboard.createProjectModal.title') }}
+                        </h2>
 
                         <p class="mt-1 text-sm text-gray-600">
-                            {{ t('dashboard.createProjectModal.description') }}
+                            {{ $t('dashboard.createProjectModal.description') }}
                         </p>
 
                         <div class="mt-6">
                             <InputLabel
                                 for="name"
-                                :value="t('dashboard.createProjectModal.form.name.label')"
+                                :value="$t('dashboard.createProjectModal.form.name.label')"
                                 class="sr-only"
                             />
 
@@ -96,7 +95,7 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
                                 v-model="projectForm.name"
                                 type="text"
                                 class="mt-1 block w-3/4"
-                                :placeholder="t('dashboard.createProjectModal.form.name.placeholder')"
+                                :placeholder="$t('dashboard.createProjectModal.form.name.placeholder')"
                             />
 
                             <InputError :message="projectForm.errors.name" class="mt-2" />
@@ -104,7 +103,7 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
 
                         <div class="mt-6 flex justify-end">
                             <Button variant="secondary" @click="closeCreateProjectModal">
-                                {{ t('dashboard.createProjectModal.cancel') }}
+                                {{ $t('dashboard.createProjectModal.cancel') }}
                             </Button>
                             <Button
                                 class="ms-3"
