@@ -7,7 +7,7 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger
+    DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 import { Button } from '@/Components/ui/button';
 
@@ -25,9 +25,7 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex shrink-0 items-center">
-                                <Link :href="route('dashboard')">
-                                    [WE NEED A LOGO]
-                                </Link>
+                                <Link :href="route('dashboard')"> [WE NEED A LOGO] </Link>
                             </div>
 
                             <!-- Navigation Links -->
@@ -135,7 +133,6 @@ const showingNavigationDropdown = ref(false);
             <main>
                 <slot />
             </main>
-
         </div>
     </div>
 </template>

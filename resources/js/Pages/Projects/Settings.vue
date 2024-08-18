@@ -15,7 +15,7 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuTrigger
+    DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 import Content from '@/Components/ui/content/Content.vue';
 
@@ -23,11 +23,11 @@ const props = computed(
     () =>
         usePage<{
             project: { tokens: Array<{ id: string; int: string; abilities: Array<string> }> };
-        }>().props
+        }>().props,
 );
 const createApiTokenForm = useForm({
     name: '',
-    abilities: []
+    abilities: [],
 });
 const creatingApiToken = ref(false);
 
@@ -37,14 +37,14 @@ const createApiToken = () => {
         onSuccess: () => {
             creatingApiToken.value = false;
             createApiTokenForm.reset();
-        }
+        },
     });
 };
 
 const deleteApiToken = (id: string) => {
     const form = useForm({});
     form.delete(route('project.api-tokens.delete', { project: props.value.project.uuid, tokenId: id }), {
-        preserveScroll: true
+        preserveScroll: true,
     });
 };
 </script>
@@ -93,9 +93,7 @@ const deleteApiToken = (id: string) => {
                                         v-model="createApiTokenForm.name"
                                         type="text"
                                         class="mt-1 block w-3/4"
-                                        :placeholder="
-                                                $t('project.settings.createApiTokenModal.form.name.placeholder')
-                                            "
+                                        :placeholder="$t('project.settings.createApiTokenModal.form.name.placeholder')"
                                     />
 
                                     <InputError :message="createApiTokenForm.errors.name" class="mt-2" />
@@ -149,7 +147,7 @@ const deleteApiToken = (id: string) => {
                                             :class="{ 'opacity-25': createApiTokenForm.processing }"
                                             :disabled="createApiTokenForm.processing"
                                             @click="createApiToken"
-                                        >Create
+                                            >Create
                                         </Button>
                                     </DialogClose>
                                 </DialogFooter>
@@ -179,7 +177,7 @@ const deleteApiToken = (id: string) => {
                                             <time v-if="token.last_used_at" :datetime="token.last_used_at">
                                                 {{
                                                     $t('project.token.last_used_at', {
-                                                        time: diffForHumans(token.last_used_at)
+                                                        time: diffForHumans(token.last_used_at),
                                                     })
                                                 }}
                                             </time>

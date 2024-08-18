@@ -12,9 +12,10 @@ import {
     Dialog,
     DialogClose,
     DialogContent,
-    DialogDescription, DialogHeader,
+    DialogDescription,
+    DialogHeader,
     DialogTitle,
-    DialogTrigger
+    DialogTrigger,
 } from '@/Components/ui/dialog';
 
 const toast = useToast();
@@ -22,7 +23,7 @@ window.Echo.channel(`orders.1`).listen('OrderShipmentStatusUpdated', (e: any) =>
     toast(`Order ${e.order.id} has been shipped!`);
 });
 const projectForm = useForm({
-    name: ''
+    name: '',
 });
 const creatingNewProject = ref(false);
 
@@ -35,7 +36,7 @@ const createProject = () => {
         },
         onFinish: () => {
             projectForm.reset();
-        }
+        },
     });
 };
 
@@ -61,7 +62,7 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
                         <Link
                             :href="route('project.overview', { project: project.uuid })"
                             class="text-sm font-medium leading-6 text-gray-900"
-                        >{{ project.name }}
+                            >{{ project.name }}
                         </Link>
                     </div>
                 </li>
@@ -111,7 +112,7 @@ const projects = usePage<{ projects: Array<{ uuid: string; name: string }> }>().
                                         :class="{ 'opacity-25': projectForm.processing }"
                                         :disabled="projectForm.processing"
                                         @click="createProject"
-                                    >Create
+                                        >Create
                                     </Button>
                                 </div>
                             </DialogContent>

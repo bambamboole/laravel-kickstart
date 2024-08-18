@@ -10,17 +10,18 @@ import {
     Dialog,
     DialogClose,
     DialogContent,
-    DialogDescription, DialogFooter,
+    DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger
+    DialogTrigger,
 } from '@/Components/ui/dialog';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref<HTMLInputElement | null>(null);
 
 const form = useForm({
-    password: ''
+    password: '',
 });
 
 const deleteUser = () => {
@@ -33,7 +34,7 @@ const deleteUser = () => {
         onError: () => passwordInput.value?.focus(),
         onFinish: () => {
             form.reset();
-        }
+        },
     });
 };
 </script>
