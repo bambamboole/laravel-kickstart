@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
+use App\Models\User;
+use App\Services\Auth\PermissionRegistry;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,5 +22,14 @@ class ProjectFactory extends Factory
         return [
             'name' => $this->faker->word(),
         ];
+    }
+
+    public function withMembers(int $count = 3): static
+    {
+        return $this->hasAttached(
+            User::factory()->count($count),
+            ['role_id' => Role::query()->firstOrCreate(['name' => 'owner'], ['permissions' => app(PermissionRegistry::class)->all()])->id],
+            'members',
+        );
     }
 }

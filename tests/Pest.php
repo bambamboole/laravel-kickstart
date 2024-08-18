@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use Bambamboole\LaravelOpenApi\ValidatesOpenApiSpec;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,6 +16,7 @@ use Tests\TestCase;
 */
 
 uses(TestCase::class, RefreshDatabase::class)->in('Feature');
+uses(ValidatesOpenApiSpec::class)->in('Feature/Api');
 
 /*
 |--------------------------------------------------------------------------

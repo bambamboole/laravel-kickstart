@@ -13,7 +13,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 
 const toast = useToast();
-window.Echo.channel(`orders.1`).listen('OrderShipmentStatusUpdated', (e) => {
+window.Echo.channel(`orders.1`).listen('OrderShipmentStatusUpdated', (e: any) => {
     toast(`Order ${e.order.id} has been shipped!`);
 });
 const projectForm = useForm({

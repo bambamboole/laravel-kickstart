@@ -1,0 +1,301 @@
+openapi: 3.1.0
+info:
+  title: 'My Fancy API'
+  description: 'Developer API'
+  contact:
+    name: 'API Support'
+    url: 'https://laravel-kickstart.test'
+    email: hello@example.com
+  version: 1.2.3
+servers:
+  -
+    url: 'https://laravel-kickstart.test'
+    description: 'My API environment'
+paths:
+  /api/v1/info:
+    get:
+      tags:
+        - Info
+      operationId: 'GET::api.v1.info'
+      responses:
+        '200':
+          description: 'This endpoint returns information about the project, members and pending invitations.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data: { $ref: '#/components/schemas/Project' }
+                type: object
+                additionalProperties: false
+        '403':
+          description: 'Not authorized'
+      security:
+        -
+          BearerAuth:
+            - info
+  /api/v1/members:
+    get:
+      tags:
+        - Members
+      description: 'Get all members of the project.'
+      operationId: 'GET::api.v1.members'
+      parameters:
+        -
+          name: filter
+          in: query
+          description: 'Filter members by name or email.'
+          required: false
+          style: deepObject
+          schema:
+            properties:
+              uuid:
+                type: string
+                example: 123e4567-e89b-12d3-a456-426614174000
+              name:
+                type: string
+                example: 'John Doe'
+              email:
+                type: string
+                example: john@example.com
+            type: object
+        -
+          $ref: '#/components/parameters/Page'
+        -
+          $ref: '#/components/parameters/PerPage'
+      responses:
+        '200':
+          description: 'Paginated list of members'
+          content:
+            application/json:
+              schema:
+                properties:
+                  data: { type: array, items: { $ref: '#/components/schemas/Member' } }
+                  meta: { $ref: '#/components/schemas/Pagination' }
+                type: object
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+      security:
+        -
+          BearerAuth:
+            - members.list
+    post:
+      tags:
+        - Members
+      description: 'Invite a new member to the project.'
+      operationId: 'POST::api.v1.members'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                  example: john@example.com
+                role_uuid:
+                  type: string
+                  example: 2e4567-e89b-12d3-a456-426614174000
+              type: object
+      responses:
+        '201':
+          description: 'No content'
+        '422':
+          $ref: '#/components/responses/422'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+      security:
+        -
+          BearerAuth:
+            - members.invite
+  '/api/v1/members/{uuid}':
+    delete:
+      tags:
+        - Members
+      description: 'Remove member from project.'
+      operationId: 'DELETE::api.v1.members.{uuid}'
+      parameters:
+        -
+          name: uuid
+          in: path
+          description: 'The member resource identifier.'
+          required: true
+          schema:
+            type: string
+            example: 123e4567-e89b-12d3-a456-426614174000
+      responses:
+        '200':
+          description: 'No content'
+        '422':
+          $ref: '#/components/responses/422'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+      security:
+        -
+          BearerAuth:
+            - members.remove
+components:
+  schemas:
+    Pagination:
+      properties:
+        current_page:
+          type: integer
+        from:
+          type: integer
+        path:
+          type: string
+        per_page:
+          type: integer
+        last_page:
+          type: integer
+        to:
+          type: integer
+        total:
+          type: integer
+        links:
+          type: array
+          items:
+            type: object
+      type: object
+      additionalProperties: false
+    Invitation:
+      properties:
+        uuid:
+          type: string
+        email:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
+        created_at:
+          type: string
+          format: date-time
+      type: object
+      additionalProperties: false
+    Member:
+      properties:
+        uuid:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        last_login_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        role:
+          $ref: '#/components/schemas/Role'
+      type: object
+      additionalProperties: false
+    Project:
+      required:
+        - uuid
+        - name
+      properties:
+        uuid:
+          type: string
+        name:
+          type: string
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+        tokens:
+          type: array
+          items:
+            $ref: '#/components/schemas/Token'
+        invitations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Token'
+      type: object
+      additionalProperties: false
+    Role:
+      properties:
+        uuid:
+          type: string
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+            example: project.delete
+      type: object
+      additionalProperties: false
+    Token:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        abilities:
+          type: array
+          items:
+            type: string
+            example: info
+        last_used_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+      type: object
+      additionalProperties: false
+  responses:
+    '401':
+      description: Unauthorized
+    '403':
+      description: Unauthorized
+    '422':
+      description: 'Failed validation'
+      content:
+        application/json:
+          schema:
+            properties:
+              message:
+                type: string
+                example: 'The email is required (and 1 more error)'
+              errors:
+                type: object
+                example:
+                  email: ['The email is required']
+                  role_uuid: ['The role is required']
+            type: object
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: 'Page number.'
+      required: false
+      schema:
+        type: integer
+      example: 1
+    PerPage:
+      name: per_page
+      in: query
+      description: 'Page size.'
+      required: false
+      schema:
+        type: integer
+      example: 30
+  securitySchemes:
+    BearerAuth:
+      type: http
+      in: header
+      scheme: bearer
+security:
+  -
+    BearerAuth: []
+tags:
+  -
+    name: Info
+    description: Info
+  -
+    name: Members
+    description: Members
