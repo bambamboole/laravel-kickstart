@@ -20,7 +20,7 @@ class ProjectMembersController
         $resource::withoutWrapping();
 
         return Inertia::render(
-            'Projects/Members/Index',
+            'Projects/Members',
             [
                 'project' => $resource,
                 'roles' => $roles,

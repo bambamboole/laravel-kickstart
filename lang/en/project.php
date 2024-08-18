@@ -24,17 +24,15 @@ return [
         'remove' => 'Remove from Project',
     ],
     'members' => [
+        'header' => 'Project members',
+        'description' => 'Here you can manage the project members',
         'index' => [
-            'description' => 'Here you can manage the project members',
-            'header' => 'Project members',
-            'invitation_list' => 'Open invitations',
             'invite' => [
                 'button' => 'Invite a new Member',
             ],
             'inviteModal' => [
                 'button' => 'Invite a new Member',
                 'cancel' => 'cancel',
-                'description' => 'The invitee will get an email with alink to join the project. Please make sure the email is correct.',
                 'form' => [
                     'email' => [
                         'label' => 'Email',
@@ -47,8 +45,13 @@ return [
                 'title' => 'Invite a new member',
             ],
             'member_list' => 'Members',
-            'title' => 'Invite a new member',
         ],
+        'invitations' => 'Open invitations',
+        'inviteModal' => [
+            'title' => 'Invite a new member',
+            'description' => 'The invitee will get an email with alink to join the project. Please make sure the email is correct.',
+        ],
+        'title' => 'Members and invitations',
     ],
     'settings' => [
         'createApiTokenModal' => [
@@ -83,6 +86,9 @@ return [
             'members' => [
                 'invite' => [
                     'description' => 'Invite new members to the project',
+                ],
+                'list' => [
+                    'description' => 'List existing project members',
                 ],
                 'remove' => [
                     'description' => 'Remove members from the project',

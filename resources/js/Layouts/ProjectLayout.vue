@@ -13,10 +13,8 @@ import {
 import * as Icons from '@heroicons/vue/24/outline';
 import { Bars3Icon, XMarkIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 import Toast from '@/Components/Toast.vue';
-import { useTranslation } from 'i18next-vue';
 import { hasProjectPermission } from '@/utils';
 
-const { t } = useTranslation();
 const iconComponents = Object.fromEntries(Object.entries(Icons).map(([key, value]) => [key, value]));
 const sidebarOpen = ref(false);
 </script>
@@ -171,7 +169,7 @@ const sidebarOpen = ref(false);
                                         <Link
                                             :href="route('dashboard')"
                                             class="block rounded-md py-2 pl-9 pr-2 text-sm leading-6 text-gray-700 hover:bg-gray-50"
-                                            >{{ t('sidebar.back_to_dashboard') }}
+                                            >{{ $t('sidebar.back_to_dashboard') }}
                                         </Link>
                                     </li>
                                     <li v-for="subItem in $page.props.sidebar.profile" :key="subItem.name">

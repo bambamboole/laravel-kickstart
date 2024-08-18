@@ -13,5 +13,9 @@ return [
         ],
         'title' => 'Create a new project',
     ],
+    'project' => [
+        'new' => 'Create a new project',
+    ],
     'title' => '<div class="p-8 text-red-500">The <strong>best</strong> Dashboard of the <i>World</i></div>',
+    'welcome' => 'Welcome',
 ];
