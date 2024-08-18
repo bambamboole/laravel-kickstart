@@ -40,9 +40,7 @@
         "vue": "^3.4.0",
         "vue-toastification": "^2.0.0-rc.5",
         "vue-tsc": "^2.0.22",
-        "ziggy-js": "^2.2.1"
-    },
-    "dependencies": {
+        "ziggy-js": "^2.2.1",
         "@vueuse/core": "^10.11.1",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
